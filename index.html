@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="lecture-8_impact_controlled_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture-8_impact_controlled_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture-8_impact_controlled_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture-8_impact_controlled_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture-8_impact_controlled_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture-8_impact_controlled_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lecture-8_impact_controlled_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
+
+  <title>Impact Evaluation: Controlled Comparison Strategies</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lecture-8_impact_controlled_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture-8_impact_controlled_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="lecture-8_impact_controlled_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <link href="lecture-8_impact_controlled_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="lecture-8_impact_controlled_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script type="module" src="lecture-8_impact_controlled_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="lecture-8_impact_controlled_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+  <script type="ojs-define">
+  {"contents":[{"name":"ra_data","value":{"participate":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"group":["participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","participant","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison","comparison"],"test_score":[136.7401,114.2504,151.7165,173.1799,130.6047,139.2006,97.2699,148.4655,131.1218,103.7901,173.1963,100.535,146.3302,120.7858,115.0111,131.3651,172.6919,102.6407,122.768,185.1853,142.9687,94.8771,180.3716,100.296,134.7595,100.7566,129.048,188.8551,164.8357,115.9917,113.2135,142.311,100.5152,103.5321,158.4476,125.9934,145.7623,170.424,125.1625,89.8052,107.8709,119.1916,119.4594,125.7376,136.1453,111.3563,123.1514,175.6145,130.3558,134.7011,128.6467,141.5403,115.0807,161.5815,101.3668,157.1156,91.7751,90.6565,127.1477,132.7802,135.3534,143.8444,103.512,89.7488,121.5462,135.1234,124.3914,107.2598,109.7973,143.8271,120.2706,118.8189,129.4715,115.0146,122.2283,112.9592,124.9486,157.92,150.65,161.273,195.2025,128.724,185.6799,129.6532,91.315,95.5028,166.9968,123.627,121.843,111.834,81.1913,140.5735,159.5421,152.949,132.3867,87.8892,154.7582,112.3042,115.1493,103.3526,106.4808,132.3478,131.6563,105.2336,128.1971,124.4186,126.4306,143.3852,120.6361,107.0459,113.9694,108.6772,89.6234,157.6623,119.1776,145.0776,131.0491,144.6532,104.1225,150.7048,121.0742,134.6866,124.7121,119.5426,111.2765,125.849,70.0639,152.0815,123.6474,88.7659,134.1585,153.1022,105.9984,142.0027,158.1887,146.7031,163.9244,155.573,129.4574,92.6591,105.1369,144.6972,149.7273,163.0887,147.9305,95.4822,132.5719,85.0239,154.3254,135.4121,143.1279,116.4169,87.0745,155.7529,101.322,123.3468,100.819,124.6979,86.9546,94.0431,150.864,141.819,140.7827,141.7865,173.4223,152.6207,137.2583,108.1526,112.0628,125.5583,155.8504,82.3015,149.9332,127.6287,135.1404,152.0973,87.4217,133.3945,159.4751,139.6073,130.8935,153.3584,127.0159,101.8079,140.4382,131.2867,127.8047,132.6151,104.7592,122.9083,158.249,128.9779,163.4208,140.0421,112.5612,73.4376,149.6892,118.7131,115.9738,145.5778,165.5528,111.0389,128.6164,117.9885,106.9871,113.8093,142.9483,166.959,68.5829,93.7637,120.0049,142.9181,122.6866,163.6009,136.3282,106.1557,104.9026,143.7749,138.3092,133.6426,119.4575,130.1046,112.4152,166.2198,96.9235,118.484,117.6832,180.6969,102.7376,148.1418,131.2908,118.6172,142.1625,132.6574,130.8946,115.2077,152.4669,130.985,127.3103,158.6243,54.2199,134.607,124.5935,159.1228,118.7271,123.6524,120.7738,139.4717,93.0262,113.2176,85.9062,57.8575,112.8068,94.5592,140.8471,89.263,143.0868,151.7042,38.3769,95.9499,94.0206,130.2377,104.5718,124.1454,127.9193,59.3654,80.6516,94.3113,105.4188,101.6037,61.1448,136.5499,99.9091,73.7421,135.4613,84.1139,142.3647,119.0751,94.336,61.5925,118.704,69.6771,127.4459,112.2943,129.3184,72.6804,82.8758,88.5582,85.2779,117.8724,96.0481,74.7741,89.0186,77.4243,98.319,85.4151,99.5837,112.7164,89.6909,80.7764,110.4043,98.9989,67.9221,118.0228,78.9629,85.7415,88.1848,73.4625,102.4996,80.3819,55.262,64.8969,120.0028,107.9209,70.9705,110.5362,85.4577,119.1297,87.1908,93.2916,85.3478,129.7436,83.377,100.417,97.32,84.0205,138.41,132.8696,108.5968,120.4229,127.3832,127.9688,61.6701,111.9341,126.1623,125.7805,133.917,126.9466,83.9077,126.4529,132.9404,99.657,86.6549,84.6115,117.5396,82.7327,74.3965,100.9341,103.0629,81.2112,97.4497,88.8552,109.5333,105.6992,118.2433,151.5127,64.6275,82.9126,114.0983,94.9552,58.5299,94.5232,123.4435,114.6959,97.7521,24.0065,86.044,66.7702,123.4065,98.4912,152.5864,82.4874,75.8774,105.9108,126.4474,81.6044,121.5592,87.953,129.4755,94.7377,98.9807,61.5673,67.9125,101.5912,77.7748,99.5636,147.5749,44.8309,107.5439,104.717,60.9278,133.4661,82.8727,95.0969,62.8192,52.6469,134.7832,140.209,126.5551,103.674,89.3114,83.9055,106.7988,80.098,83.6518,89.9705,113.1591,128.9139,54.6289,125.2632,82.5926,94.3543,148.9195,111.8997,79.399,97.1911,91.1001,103.5856,63.4393,129.0631,91.2422,134.6087,140.1209,75.1826,78.8954,117.0457,129.4894,107.1914,99.4849,98.2105,109.6604,114.1886,96.472,62.3156,136.3172,92.1589,70.7427,135.8158,110.3008,109.5814,56.8331,116.0322,118.4499,123.3387,147.3998,113.4169,104.2316,102.2852,114.4633,83.462,106.8691,74.25,122.7306,69.2712,119.337,111.6564,96.994,41.8899,72.5102,92.5335,99.1716,82.4725,93.9368,95.3023,67.326,136.0028,97.3191,97.5093,90.1694,118.29,125.7362,111.6804,110.735,87.1126,67.4003,126.9529,67.2784,92.1426,102.3504,114.1003,111.581,54.4045,97.2536,148.6149,87.3194,58.2789,115.9983,163.8364,87.0016,65.7182,83.0999,109.3338,83.2702,80.6951,138.3576,59.1515,129.7331,116.9603,68.3067,90.5538],"income":[106.1655,134.0974,108.2129,122.8371,80.4274,85.8757,83.8336,88.1411,94.8893,91.0321,74.8791,124.4949,82.4967,113.0096,88.0247,129.4661,63.3342,99.6987,61.6119,84.1432,92.9454,91.125,75.2538,68.2739,83.0375,122.0046,92.5781,84.7807,81.2761,88.8167,76.118,98.1451,69.3245,85.7884,118.5429,76.7215,81.6139,131.0808,117.5672,112.1033,79.8931,89.2308,84.2818,123.9578,70.6829,67.0595,94.2639,89.8523,108.9289,83.4215,88.2696,74.4348,66.9321,122.4577,100.2649,89.197,86.1477,101.8242,165.2894,103.3832,85.4413,26.1116,83.5074,88.4361,96.9939,122.0199,114.2939,125.6491,105.0358,85.1868,98.0748,112.7047,81.5456,108.3062,69.5282,70.3132,79.773,127.7669,99.7288,86.3781,135.213,84.607,65.7915,100.0905,95.7514,89.0383,81.3107,113.7713,86.2293,105.4819,86.3508,111.1376,128.33,75.264,99.6449,98.3638,56.4415,51.1382,90.1238,154.4879,124.7214,102.8903,74.1726,62.7398,103.7989,152.9769,74.1578,63.973,116.2858,136.8924,110.4797,86.555,83.9489,95.152,67.3425,87.5086,85.6477,143.3538,105.5581,122.6091,67.5476,78.4616,94.5367,102.2875,81.998,74.9833,49.9595,73.3204,71.5227,130.6467,74.7124,98.1469,107.7219,91.4789,55.1113,112.3842,121.7204,81.7269,92.0464,93.9507,105.2924,102.4722,73.8787,-27.9836,51.4759,104.4481,105.8105,71.4715,85.4262,97.5937,74.522,31.9331,83.2466,93.9815,118.5244,90.7928,113.3376,69.6186,135.7201,146.9668,71.7876,141.9044,136.6257,114.4525,72.7768,100.2397,120.8586,22.5489,84.6511,70.5629,114.2288,75.6163,73.5056,114.6467,92.7846,111.484,75.727,103.9981,90.4986,40.5208,102.0525,107.7307,114.5649,96.6179,116.0493,46.1375,117.626,100.8706,87.7854,73.2359,114.5606,79.3445,62.6509,126.6598,138.0257,69.1179,98.5871,75.9446,107.4668,107.033,104.9606,64.0503,111.3497,98.5541,122.1809,95.8136,130.003,140.3658,89.4391,113.6686,79.0376,63.6469,90.8124,62.2165,103.7909,99.9537,109.8009,89.8593,95.7384,108.0976,79.2254,75.0936,126.8143,75.5275,116.6061,86.9601,48.2941,102.3732,125.9832,79.4598,45.8332,137.9559,103.9459,60.5122,81.0924,99.1093,97.8701,152.8131,108.3256,67.4134,92.6999,93.485,106.9411,70.2638,105.7938,128.3292,112.966,90.97,150.1289,114.9689,81.1848,62.3118,56.5431,61.3863,98.4425,83.0085,72.8013,110.3535,71.2818,85.5183,88.4075,54.4936,95.9358,69.0646,94.1762,34.784,59.8907,62.0909,78.2363,48.6292,82.0218,91.1712,69.0161,30.8841,52.1699,102.2264,105.6032,46.4947,74.2955,90.9664,43.3843,65.9041,57.5322,77.56,46.7309,35.0902,68.7905,35.8269,68.642,36.0338,37.896,63.6715,108.1396,54.0751,49.8661,61.2383,155.9439,50.5645,93.2559,66.73,107.6052,80.2176,89.9041,72.0606,116.1886,67.0359,102.9091,51.6126,85.7682,27.5905,56.7992,130.0489,68.9804,132.6503,93.0667,72.9814,46.1822,99.6237,59.5505,87.4474,119.088,56.2976,69.2388,95.9002,103.5679,62.9752,94.5451,114.6148,69.1942,37.9954,55.0012,74.5475,38.3193,101.7723,64.4638,68.44,52.4083,77.8317,109.0514,69.5512,59.4004,85.2257,87.2808,70.8231,100.7101,80.6896,67.7544,52.6939,136.516,62.8905,110.137,38.8923,71.8492,67.2433,45.0629,78.1555,79.9269,74.1622,133.7782,73.6679,98.6454,62.6392,90.863,79.4226,89.9707,60.431,66.6526,87.6605,63.6558,122.3682,57.4415,99.026,105.5871,41.6308,49.6179,77.9543,45.1008,106.4145,57.8687,70.9325,60.4731,93.7833,86.2131,47.6978,44.2709,46.6181,87.6532,95.2281,80.7508,50.7942,78.4328,98.042,36.0755,49.2056,48.5715,96.6868,27.745,64.1908,79.7526,121.8296,114.4148,34.1742,9.3886,104.7094,53.2166,38.7878,59.9644,76.6059,75.8285,128.6135,83.1539,64.5449,105.525,66.6747,46.9155,83.0023,80.2963,59.3306,93.0202,80.9813,102.9245,48.4837,87.8448,102.8956,81.3204,73.7079,79.9399,70.9468,77.568,68.0898,76.6729,74.6777,70.8371,30.5954,28.1984,104.0751,90.8852,80.1392,74.2478,60.2003,58.035,76.984,65.7529,71.6041,119.5219,112.0667,39.8292,55.9088,53.0481,75.1941,89.0152,80.8384,130.4324,134.6409,105.6843,113.528,98.6522,40.5353,72.0606,87.6675,127.1228,83.4002,107.8681,68.2643,119.3123,61.9603,75.927,35.1354,58.435,90.0627,77.3722,89.5913,117.5743,109.9014,124.861,76.4244,67.7634,69.3972,78.2156,147.3879,63.5021,22.305,43.4719,87.5045,67.35,47.1436,99.9866,42.505,101.5255,97.1701,80.4763,70.7733,12.235,42.5372,111.0986,14.6993,103.5546,70.7802,33.2263,46.6586],"age":[13.5837,10.912,10.8713,12.7698,10.9011,11.8558,14.2356,15.1427,14.1303,12.9697,12.422,11.2872,14.4969,11.7893,10.9495,15.906,10.6428,12.0559,16.6868,12.2777,10.637,9.2723,15.2346,12.0838,12.6731,13.1443,10.8662,12.3833,10.2883,13.016,14.0607,10.7648,12.814,16.5352,11.6815,11.5497,14.0047,9.0694,13.0098,12.3177,11.768,11.4359,12.3926,11.4934,11.3777,10.2028,13.5754,16.6791,13.0048,14.566,10.4993,13.1195,12.5013,15.3991,13.5355,14.4615,12.9722,13.4324,12.0882,9.6992,14.9989,12.909,12.1812,14.7125,13.8469,13.103,12.1043,14.6201,10.8188,10.5671,16.5939,10.9253,15.0052,12.2607,13.7422,15.8537,13.7466,14.1654,16.0988,15.4384,10.9797,14.1056,11.1677,16.3049,11.3281,15.8372,13.2766,12.9311,15.3809,9.0878,10.2754,11.5756,14.5583,16.5338,10.5796,11.9834,11.2816,12.6163,13.3093,12.4643,14.0752,14.8307,14.9443,14.088,12.3938,11.9097,12.9903,11.4338,15.264,10.8622,12.7585,13.1562,11.6514,15.4249,12.4081,13.7105,11.7586,15.0031,13.4772,16.0701,14.4496,14.6877,13.9066,13.9093,12.9914,13.0583,17.3697,12.4988,14.6565,18.4486,13.1495,12.1905,14.0837,13.7578,13.2362,13.7281,15.1167,14.1188,9.6329,11.872,12.2655,9.5873,14.1128,9.7409,11.5754,15.3072,15.4327,9.5406,11.5619,15.7961,12.69,13.4262,9.691,12.8538,13.1265,14.1825,13.3845,13.5816,17.5544,11.0353,11.9134,11.0011,11.4956,14.2732,13.5898,13.459,16.0549,13.1061,14.7687,14.8033,14.42,13.0783,12.745,14.9088,12.9935,13.0048,13.747,16.6879,14.6858,14.5209,13.5798,11.4772,13.1308,12.4443,11.9264,13.0718,11.5338,12.2516,13.6632,15.0787,12.4038,12.3917,11.7558,7.6898,12.5961,12.8924,10.0268,12.43,14.692,10.5087,9.6844,11.5855,13.8013,11.4116,15.0203,12.5111,13.0315,15.4563,10.4538,11.1304,11.892,12.4494,11.7123,12.1946,12.2402,13.2227,10.1971,15.0425,12.4738,11.4154,11.673,13.6675,10.1137,14.0571,13.9899,12.4329,12.7455,10.2246,14.1929,10.0448,13.8815,12.8549,12.0572,13.2721,12.7542,14.7892,12.0669,11.419,13.5277,14.3735,9.0587,11.5812,8.8042,13.5495,11.2902,15.1352,16.8749,12.2064,15.199,13.0277,14.7326,10.4658,13.5241,10.9179,11.9386,13.1168,10.132,11.2677,14.5478,10.9266,11.8945,13.9843,13.5733,13.6501,6.5694,7.3398,12.2592,12.7457,8.8496,9.634,11.7236,8.0974,12.1067,12.7273,15.6423,13.6719,10.5965,14.3465,8.84,8.4162,12.8365,15.0432,11.5161,14.2557,12.2876,14.2509,11.2382,11.8368,16.5308,12.1721,12.8442,11.5136,11.4286,9.4388,8.7253,13.3219,13.4475,13.9372,12.4204,12.2507,14.624,13.3399,13.9535,16.6941,14.2656,9.7261,14.544,13.8994,13.8775,10.9923,12.2771,12.2991,15.6078,10.3608,15.5144,14.8649,15.5392,12.3981,8.4229,12.6895,12.1449,12.749,10.2017,12.8733,13.47,10.1065,11.3769,11.5866,12.0147,12.0454,10.363,15.1046,13.5504,12.9904,11.9345,11.5656,13.6407,12.6192,11.1968,11.0204,11.3087,14.935,14.7981,12.8851,11.8817,8.2854,8.9516,14.7544,11.9971,12.5813,18.2261,11.5107,10.7471,13.8286,10.2165,11.3017,8.7727,11.1972,13.0054,13.1672,10.8031,11.6053,12.8822,11.8597,6.7386,13.2313,14.2854,11.4819,11.4983,13.3425,9.6464,6.0135,8.9957,11.8484,11.6326,9.6345,10.9794,8.4226,13.0618,7.1404,16.0413,12.5605,13.0195,8.6201,11.4581,14.2065,11.9563,10.1972,9.8624,10.7004,10.9428,10.1839,14.6398,10.7825,10.5044,12.4221,10.1866,14.3802,7.4294,14.5265,11.9796,11.5349,14.0427,15.6894,12.5014,14.7435,11.691,10.7798,9.7577,12.4066,15.4221,10.6663,13.0481,13.44,14.9129,13.4617,10.2918,12.6046,10.5499,15.0131,15.9068,12.8035,10.4866,10.108,10.7154,13.6795,12.4112,10.8415,12.704,13.3196,13.557,14.2754,13.7198,10.4761,10.9451,10.4134,8.3147,9.9654,9.1597,15.3941,10.6992,13.0457,13.7544,12.849,12.6713,10.1265,9.6828,11.7828,7.6874,12.5732,9.6097,12.149,12.1814,12.1563,9.9131,13.8604,12.0926,11.3946,14.444,13.7342,12.7265,12.2744,10.8803,10.929,13.9411,11.056,12.4766,11.8556,11.4297,16.964,14.2374,13.9985,13.9987,14.1326,11.8926,11.8305,11.6344,12.9128,12.5444,11.1269,10.0487,10.355,10.0743,10.898,14.7275,12.185,11.5906,8.5595,13.8343,13.0636,12.9649,10.1385,10.4437,11.7664,12.046,12.0219,14.2753,11.1394,11.5896,15.1295],"prek":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"red":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"blue":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"y0":[180.5242,155.484,190.2804,217.0032,166.4496,177.4999,140.1245,193.565,174.8714,144.8326,211.5281,141.5589,189.5737,161.6653,151.7125,182.1237,206.3109,142.7224,168.3027,224.1551,179.5373,128.5342,224.3661,137.2909,174.4094,145.2456,166.0382,228.0998,199.5398,156.9053,154.9467,179.6551,139.0756,151.1813,199.6648,162.7649,187.9331,207.6709,168.9387,131.6509,145.3961,156.9865,158.6728,167.1201,171.9689,144.4678,165.7287,223.9578,173.2583,178.1752,164.4723,181.2228,152.7766,210.6254,144.4642,200.9582,132.3343,133.7036,173.8529,168.517,179.8954,178.2736,142.2252,134.0174,164.9393,179.5315,166.0293,155.0649,147.9385,179.4799,169.2658,157.9399,173.6365,156.3666,162.6655,157.698,166.4191,205.0275,198.8205,206.7876,236.6831,171.3958,220.5944,178.2721,129.5464,142.0809,207.6811,166.8662,167.2277,146.5578,116.3772,180.8385,207.4916,199.5431,169.5103,127.6924,188.9657,148.6507,156.7802,149.7299,153.1033,178.2983,174.9623,145.6835,169.3646,169.5356,165.8271,178.6501,168.7926,148.4595,156.5344,149.6451,127.3212,204.0273,156.7281,187.2495,169.1311,194.9949,147.6326,201.1059,162.7282,177.9082,167.9789,163.59,151.459,165.4639,115.7992,190.4111,166.1127,144.7278,173.9287,193.2979,150.9379,184.6662,196.1722,191.3978,212.3298,197.9834,163.9278,131.7981,146.1971,180.119,191.3408,185.7721,182.2289,142.5414,180.0183,117.2523,191.9919,182.7637,176.9601,147.4626,115.7812,191.8588,140.4275,161.7911,139.9218,159.823,136.6355,131.8105,182.8696,179.0116,178.4364,182.7782,208.8796,190.5626,182.4539,137.6196,151.0654,163.2212,197.1132,117.0197,183.7737,169.9111,171.4058,190.2553,123.4883,178.17,198.8965,173.7011,169.2583,188.0858,165.734,137.3584,176.8959,163.044,163.635,168.2054,141.8642,161.3893,195.5127,162.6957,194.1974,169.0877,152.556,107.1341,180.6015,152.1676,157.1045,178.2984,195.4177,140.6149,167.3541,150.6671,149.2457,148.4128,182.0115,211.9082,98.4344,127.3913,151.6927,174.1816,155.1925,194.2117,171.1878,142.5965,136.2769,182.8459,172.8306,167.2832,150.726,164.949,145.3241,201.8866,136.5639,152.0458,148.0037,211.3834,143.7217,176.1773,163.6372,158.1225,176.6714,165.2527,164.5121,154.6969,186.3877,169.1042,165.1983,194.1127,81.6072,167.1178,152.896,193.2482,151.887,166.7556,165.8201,172.9815,138.4371,150.7698,129.4899,91.0201,151.5093,128.5337,180.5685,129.7975,176.6308,191.2749,80.6006,132.355,132.6504,169.6557,147.3121,164.3521,156.4758,83.5233,117.1591,132.0118,136.9416,131.7348,98.7942,167.8618,137.0242,108.2851,177.9629,126.6803,179.1179,157.4176,124.4456,92.5216,153.7155,111.354,161.2314,153.5617,163.5668,109.6912,117.2312,120.8144,130.2036,150.8199,130.526,109.1685,127.6897,106.7093,125.7562,123.1827,147.0731,150.6473,128.8573,116.9508,155.4129,138.7005,109.8196,163.6171,124.1128,116.8974,132.5638,111.4227,143.8314,110.1255,90.4961,107.5001,163.1165,146.9075,116.306,152.5641,126.1543,158.8883,114.9917,132.4154,126.5464,165.8713,115.7043,140.7537,139.6167,110.531,170.6183,167.5042,139.5456,148.3132,153.6093,165.6329,92.6028,148.0921,156.4776,155.7557,166.4392,159.9681,117.2065,155.449,161.4978,138.0495,124.9793,117.464,151.3741,107.3724,99.0751,135.7123,140.7088,112.6629,144.9156,115.7657,138.2125,140.0808,143.1827,181.9317,90.1656,112.7232,153.487,128.6563,90.0007,123.9978,158.2942,146.3576,120.2263,56.5122,121.28,98.5,152.7688,137.4131,177.6233,104.4169,104.4276,133.7707,154.6743,108.6688,148.028,115.4397,161.3861,116.1118,137.1106,96.0665,102.5729,123.6012,105.1181,132.6384,180.2528,74.7482,135.3437,131.1972,90.6567,163.6381,115.7599,121.5824,88.6851,87.1598,157.931,175.3885,149.3892,144.9099,124.712,110.3928,135.8231,121.9478,113.9761,123.3362,142.5375,158.1341,81.727,162.9378,121.7522,122.1414,185.5682,145.4473,113.9164,132.4147,119.7133,134.7277,93.8411,167.1874,133.3483,165.0641,169.8786,105.6881,108.4582,151.7756,162.3057,135.9691,132.6497,131.6588,144.4416,150.2071,130.9954,86.3274,161.0273,123.3932,96.4606,163.7604,136.0451,146.3897,84.0351,149.822,152.5339,156.1972,184.6946,144.8766,127.5801,131.4418,135.1429,116.1279,134.9901,106.6318,160.1366,107.048,149.7316,150.7299,131.0445,68.7326,108.6042,128.7687,137.3369,115.3613,126.4842,123.9867,107.1394,164.3108,129.865,124.7341,118.8723,161.2242,161.9483,148.6365,150.4897,126.3679,103.6715,158.2564,97.3234,124.908,135.2607,151.0929,138.0285,77.3449,121.7494,179.1614,123.5093,87.3632,149.1782,185.2058,124.8228,101.5623,117.0773,136.6881,105.3811,108.4817,173.5596,84.6653,168.6392,146.3171,94.8086,125.4785]}}]}
+  </script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Impact Evaluation: Controlled Comparison Strategies</h1>
+  <p class="subtitle">Week 8<br>REF 770: Program Evaluation</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="recap-from-last-two-classes" class="slide level2 smaller">
+<h2>Recap from Last Two Classes</h2>
+<ul>
+<li>We’ve been observing people out in the world, in their natural state</li>
+<li>We want to know effects of programs for people who chose to participate</li>
+<li>We use people who did not participate as comparison group, to estimate participants’ counterfactuals
+<ul>
+<li>But factors that cause participation &amp; also affect outcomes create selection bias
+</li></ul>
+</li><li class="fragment" data-fragment-index="1">
+Covariate-based strategies of regression adjustment &amp; matching help reduce selection bias
+</li>
+<ul class="fragment" data-fragment-index="1">
+<li>
+But will not eliminate it unless there are no unmeasured confounders
+</li>
+<li>
+Impossible to know
+</li>
+</ul>
+<li class="fragment" data-fragment-index="2">
+DiD limits the type of unmeasured confounders that can cause selection bias
+</li>
+<ul class="fragment" data-fragment-index="2">
+<li>
+And gives us a way to check the likelihood that these are present &amp; giving us serious problems
+</li>
+<li>
+…but still can’t guarantee that we’ve eliminated them
+</li>
+</ul>
+</ul>
+
+</section>
+<section>
+<section id="randomized-controlled-trials" class="title-slide slide level1 center">
+<h1>Randomized <br>Controlled Trials</h1>
+
+</section>
+<section id="random-assignment-eliminates-selection-bias" class="slide level2">
+<h2>Random Assignment <br>Eliminates Selection Bias</h2>
+<ul>
+<li><strong>Randomized controlled trials</strong>: design defined by the use of <strong>random assignment</strong>
+<ul>
+<li>Randomly choose from a group of people who will participate in the program</li>
+</ul></li>
+<li>Those not randomly selected become the comparison group
+<ul>
+<li>“Control” group<a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a></li>
+</ul></li>
+<li>Random assignment can <strong><em>guarantee the elimination of selection bias</em></strong>
+<ul>
+<li>Making RCTs the strongest / most internally valid design</li>
+</ul></li>
+</ul>
+<aside></aside></section>
+<section id="how-does-random-assignment-eliminate-selection-bias" class="slide level2 smaller">
+<h2>How Does Random Assignment <br>Eliminate Selection Bias?</h2>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell" data-fig-height="2" data-fig-width="8" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="192" viewbox="0.00 0.00 464.00 122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 118)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118 460,-118 460,4 -4,4"></polygon>
+<!-- prog -->
+<g id="node1" class="node">
+<title>prog</title>
+<polygon fill="none" stroke="black" points="145.68,-41.6 59.68,-41.6 59.68,-0.4 145.68,-0.4 145.68,-41.6"></polygon>
+<text text-anchor="start" x="67.68" y="-25.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Mindfulness</text>
+<text text-anchor="start" x="89.45" y="-8.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Prog</text>
+</g>
+<!-- outcome -->
+<g id="node2" class="node">
+<title>outcome</title>
+<polygon fill="none" stroke="black" points="359.59,-39 280.62,-39 280.62,-3 359.59,-3 359.59,-39"></polygon>
+<text text-anchor="start" x="288.61" y="-16.8" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- prog&#45;&gt;outcome -->
+<g id="edge1" class="edge">
+<title>prog-&gt;outcome</title>
+<path fill="none" stroke="black" d="M145.89,-21C183.35,-21 237.34,-21 275.26,-21"></path>
+<polygon fill="black" stroke="black" points="275.27,-22.75 280.27,-21 275.27,-19.25 275.27,-22.75"></polygon>
+</g>
+<!-- motivation -->
+<g id="node3" class="node">
+<title>motivation</title>
+<polygon fill="none" stroke="black" points="250.61,-113.88 172.17,-113.88 172.17,-77.88 250.61,-77.88 250.61,-113.88"></polygon>
+<text text-anchor="start" x="180.28" y="-91.68" font-family="../../../../../Roboto-Regular" font-size="14.00">Motivation</text>
+</g>
+<!-- motivation&#45;&gt;prog -->
+<g id="edge2" class="edge">
+<title>motivation-&gt;prog</title>
+<path fill="none" stroke="black" d="M185.07,-77.75C170.6,-67.78 152.47,-55.3 136.91,-44.58"></path>
+<polygon fill="black" stroke="black" points="137.7,-43 132.59,-41.6 135.71,-45.88 137.7,-43"></polygon>
+</g>
+<!-- motivation&#45;&gt;outcome -->
+<g id="edge3" class="edge">
+<title>motivation-&gt;outcome</title>
+<path fill="none" stroke="black" d="M237.71,-77.75C253.22,-67.07 272.92,-53.5 289.17,-42.31"></path>
+<polygon fill="black" stroke="black" points="290.53,-43.5 293.65,-39.22 288.54,-40.61 290.53,-43.5"></polygon>
+</g>
+<!-- random -->
+<!-- other -->
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="1">
+<div class="cell" data-fig-height="2" data-fig-width="8" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="192" viewbox="0.00 0.00 464.00 122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 118)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118 460,-118 460,4 -4,4"></polygon>
+<!-- prog -->
+<g id="node1" class="node">
+<title>prog</title>
+<polygon fill="none" stroke="black" points="145.68,-41.6 59.68,-41.6 59.68,-0.4 145.68,-0.4 145.68,-41.6"></polygon>
+<text text-anchor="start" x="67.68" y="-25.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Mindfulness</text>
+<text text-anchor="start" x="89.45" y="-8.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Prog</text>
+</g>
+<!-- outcome -->
+<g id="node2" class="node">
+<title>outcome</title>
+<polygon fill="none" stroke="black" points="359.59,-39 280.62,-39 280.62,-3 359.59,-3 359.59,-39"></polygon>
+<text text-anchor="start" x="288.61" y="-16.8" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- prog&#45;&gt;outcome -->
+<g id="edge1" class="edge">
+<title>prog-&gt;outcome</title>
+<path fill="none" stroke="black" d="M145.89,-21C183.35,-21 237.34,-21 275.26,-21"></path>
+<polygon fill="black" stroke="black" points="275.27,-22.75 280.27,-21 275.27,-19.25 275.27,-22.75"></polygon>
+</g>
+<!-- motivation -->
+<g id="node3" class="node">
+<title>motivation</title>
+<polygon fill="none" stroke="black" points="250.61,-113.88 172.17,-113.88 172.17,-77.88 250.61,-77.88 250.61,-113.88"></polygon>
+<text text-anchor="start" x="180.28" y="-91.68" font-family="../../../../../Roboto-Regular" font-size="14.00">Motivation</text>
+</g>
+<!-- motivation&#45;&gt;prog -->
+<!-- motivation&#45;&gt;outcome -->
+<g id="edge3" class="edge">
+<title>motivation-&gt;outcome</title>
+<path fill="none" stroke="black" d="M237.71,-77.75C253.22,-67.07 272.92,-53.5 289.17,-42.31"></path>
+<polygon fill="black" stroke="black" points="290.53,-43.5 293.65,-39.22 288.54,-40.61 290.53,-43.5"></polygon>
+</g>
+<!-- random -->
+<g id="node4" class="node">
+<title>random</title>
+<polygon fill="none" stroke="black" points="80.26,-113.6 16.37,-113.6 16.37,-72.4 80.26,-72.4 80.26,-113.6"></polygon>
+<text text-anchor="start" x="24.6" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Random</text>
+<text text-anchor="start" x="28.87" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Assign</text>
+</g>
+<!-- random&#45;&gt;prog -->
+<g id="edge4" class="edge">
+<title>random-&gt;prog</title>
+<path fill="none" stroke="black" d="M64.04,-72.17C70.18,-64.04 77.28,-54.63 83.71,-46.12"></path>
+<polygon fill="black" stroke="black" points="85.18,-47.07 86.8,-42.03 82.39,-44.96 85.18,-47.07"></polygon>
+</g>
+<!-- other -->
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="2">
+<div class="cell" data-fig-height="2" data-fig-width="8" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="192" viewbox="0.00 0.00 464.00 122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 118)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118 460,-118 460,4 -4,4"></polygon>
+<!-- prog -->
+<g id="node1" class="node">
+<title>prog</title>
+<polygon fill="none" stroke="black" points="145.68,-41.6 59.68,-41.6 59.68,-0.4 145.68,-0.4 145.68,-41.6"></polygon>
+<text text-anchor="start" x="67.68" y="-25.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Mindfulness</text>
+<text text-anchor="start" x="89.45" y="-8.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Prog</text>
+</g>
+<!-- outcome -->
+<g id="node2" class="node">
+<title>outcome</title>
+<polygon fill="none" stroke="black" points="359.59,-39 280.62,-39 280.62,-3 359.59,-3 359.59,-39"></polygon>
+<text text-anchor="start" x="288.61" y="-16.8" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- prog&#45;&gt;outcome -->
+<g id="edge1" class="edge">
+<title>prog-&gt;outcome</title>
+<path fill="none" stroke="black" d="M145.89,-21C183.35,-21 237.34,-21 275.26,-21"></path>
+<polygon fill="black" stroke="black" points="275.27,-22.75 280.27,-21 275.27,-19.25 275.27,-22.75"></polygon>
+</g>
+<!-- motivation -->
+<g id="node3" class="node">
+<title>motivation</title>
+<polygon fill="none" stroke="black" points="196.25,-113.88 117.81,-113.88 117.81,-77.88 196.25,-77.88 196.25,-113.88"></polygon>
+<text text-anchor="start" x="125.92" y="-91.68" font-family="../../../../../Roboto-Regular" font-size="14.00">Motivation</text>
+</g>
+<!-- motivation&#45;&gt;prog -->
+<g id="edge2" class="edge">
+<title>motivation-&gt;prog</title>
+<path fill="none" stroke="black" d="M143.87,-77.75C136.88,-68.12 128.19,-56.15 120.59,-45.68"></path>
+<polygon fill="black" stroke="black" points="121.99,-44.62 117.63,-41.6 119.15,-46.68 121.99,-44.62"></polygon>
+</g>
+<!-- motivation&#45;&gt;outcome -->
+<g id="edge3" class="edge">
+<title>motivation-&gt;outcome</title>
+<path fill="none" stroke="black" d="M196.51,-77.75C220.56,-66.71 251.33,-52.58 276.15,-41.18"></path>
+<polygon fill="black" stroke="black" points="276.9,-42.77 280.71,-39.09 275.44,-39.59 276.9,-42.77"></polygon>
+</g>
+<!-- random -->
+<!-- other -->
+<!-- base -->
+<g id="node6" class="node">
+<title>base</title>
+<polygon fill="none" stroke="black" points="305.23,-113.6 226.26,-113.6 226.26,-72.4 305.23,-72.4 305.23,-113.6"></polygon>
+<text text-anchor="start" x="241.64" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Baseline</text>
+<text text-anchor="start" x="234.26" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- base&#45;&gt;prog -->
+<g id="edge4" class="edge">
+<title>base-&gt;prog</title>
+<path fill="none" stroke="black" d="M225.86,-75.39C203.14,-65.36 174.52,-52.72 150.59,-42.16"></path>
+<polygon fill="black" stroke="black" points="151.15,-40.49 145.87,-40.07 149.74,-43.69 151.15,-40.49"></polygon>
+</g>
+<!-- base&#45;&gt;outcome -->
+<g id="edge5" class="edge">
+<title>base-&gt;outcome</title>
+<path fill="none" stroke="black" d="M281.47,-72.17C288.32,-63.1 296.36,-52.45 303.33,-43.22"></path>
+<polygon fill="black" stroke="black" points="304.83,-44.14 306.45,-39.09 302.04,-42.03 304.83,-44.14"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="3">
+<div class="cell" data-fig-height="2" data-fig-width="8" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="192" viewbox="0.00 0.00 464.00 122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 118)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118 460,-118 460,4 -4,4"></polygon>
+<!-- prog -->
+<g id="node1" class="node">
+<title>prog</title>
+<polygon fill="none" stroke="black" points="145.68,-41.6 59.68,-41.6 59.68,-0.4 145.68,-0.4 145.68,-41.6"></polygon>
+<text text-anchor="start" x="67.68" y="-25.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Mindfulness</text>
+<text text-anchor="start" x="89.45" y="-8.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Prog</text>
+</g>
+<!-- outcome -->
+<g id="node2" class="node">
+<title>outcome</title>
+<polygon fill="none" stroke="black" points="359.59,-39 280.62,-39 280.62,-3 359.59,-3 359.59,-39"></polygon>
+<text text-anchor="start" x="288.61" y="-16.8" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- prog&#45;&gt;outcome -->
+<g id="edge1" class="edge">
+<title>prog-&gt;outcome</title>
+<path fill="none" stroke="black" d="M145.89,-21C183.35,-21 237.34,-21 275.26,-21"></path>
+<polygon fill="black" stroke="black" points="275.27,-22.75 280.27,-21 275.27,-19.25 275.27,-22.75"></polygon>
+</g>
+<!-- motivation -->
+<g id="node3" class="node">
+<title>motivation</title>
+<polygon fill="none" stroke="black" points="196.25,-113.88 117.81,-113.88 117.81,-77.88 196.25,-77.88 196.25,-113.88"></polygon>
+<text text-anchor="start" x="125.92" y="-91.68" font-family="../../../../../Roboto-Regular" font-size="14.00">Motivation</text>
+</g>
+<!-- motivation&#45;&gt;prog -->
+<!-- motivation&#45;&gt;outcome -->
+<g id="edge3" class="edge">
+<title>motivation-&gt;outcome</title>
+<path fill="none" stroke="black" d="M196.51,-77.75C220.56,-66.71 251.33,-52.58 276.15,-41.18"></path>
+<polygon fill="black" stroke="black" points="276.9,-42.77 280.71,-39.09 275.44,-39.59 276.9,-42.77"></polygon>
+</g>
+<!-- random -->
+<g id="node4" class="node">
+<title>random</title>
+<polygon fill="none" stroke="black" points="80.26,-113.6 16.37,-113.6 16.37,-72.4 80.26,-72.4 80.26,-113.6"></polygon>
+<text text-anchor="start" x="24.6" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Random</text>
+<text text-anchor="start" x="28.87" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Assign</text>
+</g>
+<!-- random&#45;&gt;prog -->
+<g id="edge6" class="edge">
+<title>random-&gt;prog</title>
+<path fill="none" stroke="black" d="M64.04,-72.17C70.18,-64.04 77.28,-54.63 83.71,-46.12"></path>
+<polygon fill="black" stroke="black" points="85.18,-47.07 86.8,-42.03 82.39,-44.96 85.18,-47.07"></polygon>
+</g>
+<!-- other -->
+<!-- base -->
+<g id="node6" class="node">
+<title>base</title>
+<polygon fill="none" stroke="black" points="305.23,-113.6 226.26,-113.6 226.26,-72.4 305.23,-72.4 305.23,-113.6"></polygon>
+<text text-anchor="start" x="241.64" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Baseline</text>
+<text text-anchor="start" x="234.26" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- base&#45;&gt;prog -->
+<!-- base&#45;&gt;outcome -->
+<g id="edge5" class="edge">
+<title>base-&gt;outcome</title>
+<path fill="none" stroke="black" d="M281.47,-72.17C288.32,-63.1 296.36,-52.45 303.33,-43.22"></path>
+<polygon fill="black" stroke="black" points="304.83,-44.14 306.45,-39.09 302.04,-42.03 304.83,-44.14"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="4">
+<div class="cell" data-fig-height="2" data-fig-width="8" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="192" viewbox="0.00 0.00 464.00 122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 118)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118 460,-118 460,4 -4,4"></polygon>
+<!-- prog -->
+<g id="node1" class="node">
+<title>prog</title>
+<polygon fill="none" stroke="black" points="145.68,-41.6 59.68,-41.6 59.68,-0.4 145.68,-0.4 145.68,-41.6"></polygon>
+<text text-anchor="start" x="67.68" y="-25.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Mindfulness</text>
+<text text-anchor="start" x="89.45" y="-8.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Prog</text>
+</g>
+<!-- outcome -->
+<g id="node2" class="node">
+<title>outcome</title>
+<polygon fill="none" stroke="black" points="359.59,-39 280.62,-39 280.62,-3 359.59,-3 359.59,-39"></polygon>
+<text text-anchor="start" x="288.61" y="-16.8" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- prog&#45;&gt;outcome -->
+<g id="edge1" class="edge">
+<title>prog-&gt;outcome</title>
+<path fill="none" stroke="black" d="M145.89,-21C183.35,-21 237.34,-21 275.26,-21"></path>
+<polygon fill="black" stroke="black" points="275.27,-22.75 280.27,-21 275.27,-19.25 275.27,-22.75"></polygon>
+</g>
+<!-- motivation -->
+<g id="node3" class="node">
+<title>motivation</title>
+<polygon fill="none" stroke="black" points="196.25,-113.88 117.81,-113.88 117.81,-77.88 196.25,-77.88 196.25,-113.88"></polygon>
+<text text-anchor="start" x="125.92" y="-91.68" font-family="../../../../../Roboto-Regular" font-size="14.00">Motivation</text>
+</g>
+<!-- motivation&#45;&gt;prog -->
+<g id="edge2" class="edge">
+<title>motivation-&gt;prog</title>
+<path fill="none" stroke="black" d="M143.87,-77.75C136.88,-68.12 128.19,-56.15 120.59,-45.68"></path>
+<polygon fill="black" stroke="black" points="121.99,-44.62 117.63,-41.6 119.15,-46.68 121.99,-44.62"></polygon>
+</g>
+<!-- motivation&#45;&gt;outcome -->
+<g id="edge3" class="edge">
+<title>motivation-&gt;outcome</title>
+<path fill="none" stroke="black" d="M196.51,-77.75C220.56,-66.71 251.33,-52.58 276.15,-41.18"></path>
+<polygon fill="black" stroke="black" points="276.9,-42.77 280.71,-39.09 275.44,-39.59 276.9,-42.77"></polygon>
+</g>
+<!-- random -->
+<!-- other -->
+<g id="node5" class="node">
+<title>other</title>
+<polygon fill="none" stroke="black" stroke-dasharray="5,2" points="428.61,-113.6 320.32,-113.6 320.32,-72.4 428.61,-72.4 428.61,-113.6"></polygon>
+<text text-anchor="start" x="328.39" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">All Unmeasured</text>
+<text text-anchor="start" x="338.3" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Confounders</text>
+</g>
+<!-- other&#45;&gt;prog -->
+<g id="edge6" class="edge">
+<title>other-&gt;prog</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M320.12,-78.6C270.64,-65.5 198.29,-46.33 150.85,-33.76"></path>
+<polygon fill="black" stroke="black" points="151.04,-32 145.76,-32.41 150.15,-35.39 151.04,-32"></polygon>
+</g>
+<!-- other&#45;&gt;outcome -->
+<g id="edge7" class="edge">
+<title>other-&gt;outcome</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M358.74,-72.17C351.89,-63.1 343.85,-52.45 336.88,-43.22"></path>
+<polygon fill="black" stroke="black" points="338.17,-42.03 333.76,-39.09 335.38,-44.14 338.17,-42.03"></polygon>
+</g>
+<!-- base -->
+<g id="node6" class="node">
+<title>base</title>
+<polygon fill="none" stroke="black" points="305.23,-113.6 226.26,-113.6 226.26,-72.4 305.23,-72.4 305.23,-113.6"></polygon>
+<text text-anchor="start" x="241.64" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Baseline</text>
+<text text-anchor="start" x="234.26" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- base&#45;&gt;prog -->
+<g id="edge4" class="edge">
+<title>base-&gt;prog</title>
+<path fill="none" stroke="black" d="M225.86,-75.39C203.14,-65.36 174.52,-52.72 150.59,-42.16"></path>
+<polygon fill="black" stroke="black" points="151.15,-40.49 145.87,-40.07 149.74,-43.69 151.15,-40.49"></polygon>
+</g>
+<!-- base&#45;&gt;outcome -->
+<g id="edge5" class="edge">
+<title>base-&gt;outcome</title>
+<path fill="none" stroke="black" d="M281.47,-72.17C288.32,-63.1 296.36,-52.45 303.33,-43.22"></path>
+<polygon fill="black" stroke="black" points="304.83,-44.14 306.45,-39.09 302.04,-42.03 304.83,-44.14"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment" data-fragment-index="5">
+<div class="cell" data-fig-height="2" data-fig-width="8" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="768" height="192" viewbox="0.00 0.00 464.00 122.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 118)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-118 460,-118 460,4 -4,4"></polygon>
+<!-- prog -->
+<g id="node1" class="node">
+<title>prog</title>
+<polygon fill="none" stroke="black" points="145.68,-41.6 59.68,-41.6 59.68,-0.4 145.68,-0.4 145.68,-41.6"></polygon>
+<text text-anchor="start" x="67.68" y="-25.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Mindfulness</text>
+<text text-anchor="start" x="89.45" y="-8.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Prog</text>
+</g>
+<!-- outcome -->
+<g id="node2" class="node">
+<title>outcome</title>
+<polygon fill="none" stroke="black" points="359.59,-39 280.62,-39 280.62,-3 359.59,-3 359.59,-39"></polygon>
+<text text-anchor="start" x="288.61" y="-16.8" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- prog&#45;&gt;outcome -->
+<g id="edge1" class="edge">
+<title>prog-&gt;outcome</title>
+<path fill="none" stroke="black" d="M145.89,-21C183.35,-21 237.34,-21 275.26,-21"></path>
+<polygon fill="black" stroke="black" points="275.27,-22.75 280.27,-21 275.27,-19.25 275.27,-22.75"></polygon>
+</g>
+<!-- motivation -->
+<g id="node3" class="node">
+<title>motivation</title>
+<polygon fill="none" stroke="black" points="196.25,-113.88 117.81,-113.88 117.81,-77.88 196.25,-77.88 196.25,-113.88"></polygon>
+<text text-anchor="start" x="125.92" y="-91.68" font-family="../../../../../Roboto-Regular" font-size="14.00">Motivation</text>
+</g>
+<!-- motivation&#45;&gt;prog -->
+<!-- motivation&#45;&gt;outcome -->
+<g id="edge3" class="edge">
+<title>motivation-&gt;outcome</title>
+<path fill="none" stroke="black" d="M196.51,-77.75C220.56,-66.71 251.33,-52.58 276.15,-41.18"></path>
+<polygon fill="black" stroke="black" points="276.9,-42.77 280.71,-39.09 275.44,-39.59 276.9,-42.77"></polygon>
+</g>
+<!-- random -->
+<g id="node4" class="node">
+<title>random</title>
+<polygon fill="none" stroke="black" points="80.26,-113.6 16.37,-113.6 16.37,-72.4 80.26,-72.4 80.26,-113.6"></polygon>
+<text text-anchor="start" x="24.6" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Random</text>
+<text text-anchor="start" x="28.87" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Assign</text>
+</g>
+<!-- random&#45;&gt;prog -->
+<g id="edge8" class="edge">
+<title>random-&gt;prog</title>
+<path fill="none" stroke="black" d="M64.04,-72.17C70.18,-64.04 77.28,-54.63 83.71,-46.12"></path>
+<polygon fill="black" stroke="black" points="85.18,-47.07 86.8,-42.03 82.39,-44.96 85.18,-47.07"></polygon>
+</g>
+<!-- other -->
+<g id="node5" class="node">
+<title>other</title>
+<polygon fill="none" stroke="black" stroke-dasharray="5,2" points="428.61,-113.6 320.32,-113.6 320.32,-72.4 428.61,-72.4 428.61,-113.6"></polygon>
+<text text-anchor="start" x="328.39" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">All Unmeasured</text>
+<text text-anchor="start" x="338.3" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Confounders</text>
+</g>
+<!-- other&#45;&gt;prog -->
+<!-- other&#45;&gt;outcome -->
+<g id="edge7" class="edge">
+<title>other-&gt;outcome</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M358.74,-72.17C351.89,-63.1 343.85,-52.45 336.88,-43.22"></path>
+<polygon fill="black" stroke="black" points="338.17,-42.03 333.76,-39.09 335.38,-44.14 338.17,-42.03"></polygon>
+</g>
+<!-- base -->
+<g id="node6" class="node">
+<title>base</title>
+<polygon fill="none" stroke="black" points="305.23,-113.6 226.26,-113.6 226.26,-72.4 305.23,-72.4 305.23,-113.6"></polygon>
+<text text-anchor="start" x="241.64" y="-97.2" font-family="../../../../../Roboto-Regular" font-size="14.00">Baseline</text>
+<text text-anchor="start" x="234.26" y="-80.4" font-family="../../../../../Roboto-Regular" font-size="14.00">Depression</text>
+</g>
+<!-- base&#45;&gt;prog -->
+<!-- base&#45;&gt;outcome -->
+<g id="edge5" class="edge">
+<title>base-&gt;outcome</title>
+<path fill="none" stroke="black" d="M281.47,-72.17C288.32,-63.1 296.36,-52.45 303.33,-43.22"></path>
+<polygon fill="black" stroke="black" points="304.83,-44.14 306.45,-39.09 302.04,-42.03 304.83,-44.14"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
+<div class="r-stack stack-top fixed-cols">
+<div class="fragment fade-out" data-fragment-index="1">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Participant</th>
+<th style="text-align: center;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motivation</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td><strong><em>Y(0)</em></strong></td>
+<td style="text-align: center;"><strong><em>5</em></strong></td>
+<td style="text-align: center;"><strong><em>7</em></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="1">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Participant</th>
+<th style="text-align: center;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motivation</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td><strong><em>Y(0)</em></strong></td>
+<td style="text-align: center;"><strong><em>6</em></strong></td>
+<td style="text-align: center;"><strong><em>6</em></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="2">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Participant</th>
+<th style="text-align: center;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motivation</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td>Base Depress</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr class="odd">
+<td><strong><em>Y(0)</em></strong></td>
+<td style="text-align: center;"><strong><em>4</em></strong></td>
+<td style="text-align: center;"><strong><em>8</em></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="3">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Participant</th>
+<th style="text-align: center;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motivation</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>Base Depress</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="odd">
+<td><strong><em>Y(0)</em></strong></td>
+<td style="text-align: center;"><strong><em>6</em></strong></td>
+<td style="text-align: center;"><strong><em>6</em></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="4">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Participant</th>
+<th style="text-align: center;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motivation</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td>Base Depress</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr class="odd">
+<td><strong><em>Y(0)</em></strong></td>
+<td style="text-align: center;"><strong><em>3</em></strong></td>
+<td style="text-align: center;"><strong><em>9</em></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="5">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: center;">Participant</th>
+<th style="text-align: center;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Motivation</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>Base Depress</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="odd">
+<td><strong><em>Y(0)</em></strong></td>
+<td style="text-align: center;"><strong><em>6</em></strong></td>
+<td style="text-align: center;"><strong><em>6</em></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="random-assignment-in-action" class="slide level2">
+<h2>Random Assignment in Action</h2>
+<div class="columns ra">
+<div class="column" style="width:45%;">
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="294" data-source-offset="-73"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 293;"><span id="cb1-294"><a href=""></a>ra_natural <span class="op">=</span> <span class="fu">transpose</span>(ra_data)<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">participate</span>)</span>
+<span id="cb1-295"><a href=""></a></span>
+<span id="cb1-296"><a href=""></a><span class="co">// blur so the arrow keys / space keep moving the slides after a click</span></span>
+<span id="cb1-297"><a href=""></a>ra_blur <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="bu">document</span><span class="op">.</span><span class="at">activeElement</span><span class="op">?.</span><span class="fu">blur</span>()</span>
+<span id="cb1-298"><a href=""></a></span>
+<span id="cb1-299"><a href=""></a><span class="co">// Randomize shuffles who participates (still 250 per group); Reset puts</span></span>
+<span id="cb1-300"><a href=""></a><span class="co">// back the original assignment</span></span>
+<span id="cb1-301"><a href=""></a>viewof ra_assign <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>([</span>
+<span id="cb1-302"><a href=""></a>  [<span class="st">"randomize"</span><span class="op">,</span> () <span class="kw">=&gt;</span> { <span class="fu">ra_blur</span>()<span class="op">;</span> <span class="cf">return</span> d3<span class="op">.</span><span class="fu">shuffle</span>(ra_natural<span class="op">.</span><span class="fu">slice</span>()) }]<span class="op">,</span></span>
+<span id="cb1-303"><a href=""></a>  [<span class="st">"reset to natural"</span><span class="op">,</span> () <span class="kw">=&gt;</span> { <span class="fu">ra_blur</span>()<span class="op">;</span> <span class="cf">return</span> ra_natural }]</span>
+<span id="cb1-304"><a href=""></a>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> ra_natural})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="310" data-source-offset="-111"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 309;"><span id="cb2-310"><a href=""></a>ra_current <span class="op">=</span> <span class="fu">transpose</span>(ra_data)<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> ({</span>
+<span id="cb2-311"><a href=""></a>  <span class="op">...</span>d<span class="op">,</span></span>
+<span id="cb2-312"><a href=""></a>  <span class="dt">participate</span><span class="op">:</span> ra_assign[i]<span class="op">,</span></span>
+<span id="cb2-313"><a href=""></a>  <span class="dt">group</span><span class="op">:</span> ra_assign[i] <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"participant"</span> <span class="op">:</span> <span class="st">"comparison"</span></span>
+<span id="cb2-314"><a href=""></a>}))</span>
+<span id="cb2-315"><a href=""></a></span>
+<span id="cb2-316"><a href=""></a>ra_vars <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ra_data)<span class="op">.</span><span class="fu">filter</span>(v <span class="kw">=&gt;</span> <span class="op">!</span>[<span class="st">"participate"</span><span class="op">,</span> <span class="st">"group"</span>]<span class="op">.</span><span class="fu">includes</span>(v))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="321" data-source-offset="-35"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 320;"><span id="cb3-321"><a href=""></a>ra_mean <span class="op">=</span> (v<span class="op">,</span> p) <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">mean</span>(ra_current<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">participate</span> <span class="op">===</span> p)<span class="op">,</span> d <span class="kw">=&gt;</span> d[v])</span>
+<span id="cb3-322"><a href=""></a></span>
+<span id="cb3-323"><a href=""></a><span class="co">// how each variable's mean is shown (the 0/1 variables as percentages)</span></span>
+<span id="cb3-324"><a href=""></a>ra_fmt <span class="op">=</span> {</span>
+<span id="cb3-325"><a href=""></a>  <span class="kw">const</span> pct <span class="op">=</span> v <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(v <span class="op">*</span> <span class="dv">100</span>)<span class="sc">}</span><span class="vs">%`</span></span>
+<span id="cb3-326"><a href=""></a>  <span class="cf">return</span> {</span>
+<span id="cb3-327"><a href=""></a>    <span class="dt">test_score</span><span class="op">:</span> v <span class="kw">=&gt;</span> v<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)<span class="op">,</span></span>
+<span id="cb3-328"><a href=""></a>    <span class="dt">income</span><span class="op">:</span> v <span class="kw">=&gt;</span> <span class="vs">`$</span><span class="sc">${</span>v<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)<span class="sc">}</span><span class="vs">k`</span><span class="op">,</span></span>
+<span id="cb3-329"><a href=""></a>    <span class="dt">age</span><span class="op">:</span> v <span class="kw">=&gt;</span> v<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb3-330"><a href=""></a>    <span class="dt">prek</span><span class="op">:</span> pct<span class="op">,</span></span>
+<span id="cb3-331"><a href=""></a>    <span class="dt">red</span><span class="op">:</span> pct<span class="op">,</span></span>
+<span id="cb3-332"><a href=""></a>    <span class="dt">blue</span><span class="op">:</span> pct<span class="op">,</span></span>
+<span id="cb3-333"><a href=""></a>    <span class="dt">y0</span><span class="op">:</span> v <span class="kw">=&gt;</span> v<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)</span>
+<span id="cb3-334"><a href=""></a>  }</span>
+<span id="cb3-335"><a href=""></a>}</span>
+<span id="cb3-336"><a href=""></a></span>
+<span id="cb3-337"><a href=""></a><span class="co">// name shown for each variable</span></span>
+<span id="cb3-338"><a href=""></a>ra_labels <span class="op">=</span> ({</span>
+<span id="cb3-339"><a href=""></a>  <span class="dt">test_score</span><span class="op">:</span> <span class="st">"Base Test Score"</span><span class="op">,</span></span>
+<span id="cb3-340"><a href=""></a>  <span class="dt">income</span><span class="op">:</span> <span class="st">"Fam Income"</span><span class="op">,</span></span>
+<span id="cb3-341"><a href=""></a>  <span class="dt">age</span><span class="op">:</span> <span class="st">"Age"</span><span class="op">,</span></span>
+<span id="cb3-342"><a href=""></a>  <span class="dt">prek</span><span class="op">:</span> <span class="st">"Did Pre-K"</span><span class="op">,</span></span>
+<span id="cb3-343"><a href=""></a>  <span class="dt">red</span><span class="op">:</span> <span class="st">"Red"</span><span class="op">,</span></span>
+<span id="cb3-344"><a href=""></a>  <span class="dt">blue</span><span class="op">:</span> <span class="st">"Blue"</span><span class="op">,</span></span>
+<span id="cb3-345"><a href=""></a>  <span class="dt">y0</span><span class="op">:</span> <span class="st">"Y(0)"</span></span>
+<span id="cb3-346"><a href=""></a>})</span>
+<span id="cb3-347"><a href=""></a></span>
+<span id="cb3-348"><a href=""></a><span class="co">// the y0 row is bold italic (styles in style_8.css)</span></span>
+<span id="cb3-349"><a href=""></a><span class="fu">html</span><span class="vs">`&lt;div class="ra-means"&gt;&lt;table&gt;</span></span>
+<span id="cb3-350"><a href=""></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Variable&lt;/th&gt;&lt;th&gt;Participant&lt;/th&gt;&lt;th&gt;Comparison&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb3-351"><a href=""></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>ra_vars<span class="op">.</span><span class="fu">map</span>(v <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr class=</span><span class="sc">${</span>v <span class="op">===</span> <span class="st">"y0"</span> <span class="op">?</span> <span class="st">"ra-y0"</span> <span class="op">:</span> <span class="kw">null</span><span class="sc">}</span><span class="vs">&gt;</span></span>
+<span id="cb3-352"><a href=""></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>ra_labels[v]<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;td&gt;</span><span class="sc">${</span>ra_fmt[v](<span class="fu">ra_mean</span>(v<span class="op">,</span> <span class="dv">1</span>))<span class="sc">}</span><span class="vs">&lt;/td&gt;&lt;td&gt;</span><span class="sc">${</span>ra_fmt[v](<span class="fu">ra_mean</span>(v<span class="op">,</span> <span class="dv">0</span>))<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-353"><a href=""></a><span class="vs">  &lt;/tr&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/tbody&gt;</span></span>
+<span id="cb3-354"><a href=""></a><span class="vs">&lt;/table&gt;&lt;/div&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<!-- pinned to the bottom of the column, so the full data opens upward
+from the button (styles in style_8.css) -->
+<div class="ra-bottom">
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb4" data-startfrom="363" data-source-offset="-139"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 362;"><span id="cb4-363"><a href=""></a>ra_full_cols <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ra_data)<span class="op">.</span><span class="fu">filter</span>(v <span class="kw">=&gt;</span> v <span class="op">!==</span> <span class="st">"participate"</span>)</span>
+<span id="cb4-364"><a href=""></a></span>
+<span id="cb4-365"><a href=""></a><span class="co">// built once each time it's opened; ra_full.update() then rewrites the</span></span>
+<span id="cb4-366"><a href=""></a><span class="co">// cells in place when the data changes, rather than redrawing the table</span></span>
+<span id="cb4-367"><a href=""></a><span class="co">// (which flickers and loses the scroll position)</span></span>
+<span id="cb4-368"><a href=""></a>ra_full <span class="op">=</span> {</span>
+<span id="cb4-369"><a href=""></a>  <span class="cf">if</span> (<span class="op">!</span>ra_show_full) <span class="cf">return</span> <span class="fu">html</span><span class="vs">``</span></span>
+<span id="cb4-370"><a href=""></a>  <span class="kw">const</span> fmt <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">"number"</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="bu">Number</span><span class="op">.</span><span class="fu">isInteger</span>(x) <span class="op">?</span> x<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>) <span class="op">:</span> x</span>
+<span id="cb4-371"><a href=""></a>  <span class="kw">const</span> rows <span class="op">=</span> <span class="fu">transpose</span>(ra_data)<span class="op">.</span><span class="fu">map</span>(() <span class="kw">=&gt;</span> ra_full_cols<span class="op">.</span><span class="fu">map</span>(() <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;td&gt;&lt;/td&gt;`</span>))</span>
+<span id="cb4-372"><a href=""></a>  <span class="kw">const</span> el <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="ra-full"&gt;&lt;table&gt;</span></span>
+<span id="cb4-373"><a href=""></a><span class="vs">    &lt;thead&gt;&lt;tr&gt;</span><span class="sc">${</span>ra_full_cols<span class="op">.</span><span class="fu">map</span>(v <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;th&gt;</span><span class="sc">${</span>v<span class="sc">}</span><span class="vs">&lt;/th&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb4-374"><a href=""></a><span class="vs">    &lt;tbody&gt;</span><span class="sc">${</span>rows<span class="op">.</span><span class="fu">map</span>(cells <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;</span><span class="sc">${</span>cells<span class="sc">}</span><span class="vs">&lt;/tr&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/tbody&gt;</span></span>
+<span id="cb4-375"><a href=""></a><span class="vs">  &lt;/table&gt;&lt;/div&gt;`</span></span>
+<span id="cb4-376"><a href=""></a>  el<span class="op">.</span><span class="at">update</span> <span class="op">=</span> data <span class="kw">=&gt;</span> data<span class="op">.</span><span class="fu">forEach</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> ra_full_cols<span class="op">.</span><span class="fu">forEach</span>((v<span class="op">,</span> j) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-377"><a href=""></a>    rows[i][j]<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="fu">fmt</span>(d[v])</span>
+<span id="cb4-378"><a href=""></a>  }))</span>
+<span id="cb4-379"><a href=""></a>  <span class="cf">return</span> el</span>
+<span id="cb4-380"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-4-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-4-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb5" data-startfrom="384" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 383;"><span id="cb5-384"><a href=""></a>ra_full<span class="op">.</span><span class="at">update</span><span class="op">?.</span>(ra_current)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb6" data-startfrom="388" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 387;"><span id="cb6-388"><a href=""></a>viewof ra_show_full <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">button</span>(<span class="st">"full data"</span><span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">reduce</span><span class="op">:</span> v <span class="kw">=&gt;</span> { <span class="fu">ra_blur</span>()<span class="op">;</span> <span class="cf">return</span> <span class="op">!</span>v }})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb7" data-startfrom="395" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 394;"><span id="cb7-395"><a href=""></a><span class="co">// one person icon per row of the data, colored by red / blue, in a block</span></span>
+<span id="cb7-396"><a href=""></a><span class="co">// per group 15 across (the biggest icons that fill the slide's height:</span></span>
+<span id="cb7-397"><a href=""></a><span class="co">// 17 rows, the last one partial). built once; ra_people.update() moves</span></span>
+<span id="cb7-398"><a href=""></a><span class="co">// them afterwards so the moves animate (styles in style_8.css)</span></span>
+<span id="cb7-399"><a href=""></a>ra_people <span class="op">=</span> {</span>
+<span id="cb7-400"><a href=""></a>  <span class="kw">const</span> people <span class="op">=</span> <span class="fu">transpose</span>(ra_data)</span>
+<span id="cb7-401"><a href=""></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="ra-people"&gt;</span></span>
+<span id="cb7-402"><a href=""></a><span class="vs">    &lt;div class="ra-head" style="left: 0%"&gt;Participant&lt;/div&gt;</span></span>
+<span id="cb7-403"><a href=""></a><span class="vs">    &lt;div class="ra-head" style="left: 54%"&gt;Comparison&lt;/div&gt;</span></span>
+<span id="cb7-404"><a href=""></a><span class="vs">  &lt;/div&gt;`</span></span>
+<span id="cb7-405"><a href=""></a>  <span class="kw">const</span> icons <span class="op">=</span> people<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> {</span>
+<span id="cb7-406"><a href=""></a>    <span class="kw">const</span> el <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div class="ra-person"&gt;</span><span class="sc">${</span><span class="fu">svg</span><span class="vs">`&lt;svg viewBox="0 0 20 40" fill=</span><span class="sc">${</span>d<span class="op">.</span><span class="at">red</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"#EE1289"</span> <span class="op">:</span> <span class="st">"#00B2EE"</span><span class="sc">}</span><span class="vs">&gt;</span></span>
+<span id="cb7-407"><a href=""></a><span class="vs">      &lt;circle cx="10" cy="6" r="5.5"/&gt;</span></span>
+<span id="cb7-408"><a href=""></a><span class="vs">      &lt;path d="M5 13h10a3 3 0 0 1 3 3v11h-3.5v12h-3.5v-11h-2v11h-3.5v-12h-3.5v-11a3 3 0 0 1 3-3z"/&gt;</span></span>
+<span id="cb7-409"><a href=""></a><span class="vs">    &lt;/svg&gt;`</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span>
+<span id="cb7-410"><a href=""></a>    wrap<span class="op">.</span><span class="fu">append</span>(el)</span>
+<span id="cb7-411"><a href=""></a>    <span class="cf">return</span> el</span>
+<span id="cb7-412"><a href=""></a>  })</span>
+<span id="cb7-413"><a href=""></a></span>
+<span id="cb7-414"><a href=""></a>  <span class="co">// each person's spot: their group (p) and position within its block</span></span>
+<span id="cb7-415"><a href=""></a>  <span class="kw">const</span> count <span class="op">=</span> {<span class="dv">1</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">:</span> <span class="dv">0</span>}</span>
+<span id="cb7-416"><a href=""></a>  <span class="kw">const</span> natural <span class="op">=</span> people<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> ({<span class="dt">p</span><span class="op">:</span> d<span class="op">.</span><span class="at">participate</span><span class="op">,</span> <span class="dt">pos</span><span class="op">:</span> count[d<span class="op">.</span><span class="at">participate</span>]<span class="op">++</span>}))</span>
+<span id="cb7-417"><a href=""></a>  <span class="kw">let</span> spots <span class="op">=</span> natural<span class="op">.</span><span class="fu">map</span>(s <span class="kw">=&gt;</span> ({<span class="op">...</span>s}))</span>
+<span id="cb7-418"><a href=""></a>  <span class="kw">const</span> place <span class="op">=</span> (el<span class="op">,</span> s) <span class="kw">=&gt;</span> {</span>
+<span id="cb7-419"><a href=""></a>    el<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">left</span> <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span>(s<span class="op">.</span><span class="at">p</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">54</span>) <span class="op">+</span> (s<span class="op">.</span><span class="at">pos</span> <span class="op">%</span> <span class="dv">15</span>) <span class="op">*</span> (<span class="dv">46</span> <span class="op">/</span> <span class="dv">15</span>)<span class="sc">}</span><span class="vs">%`</span></span>
+<span id="cb7-420"><a href=""></a>    el<span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">top</span> <span class="op">=</span> <span class="vs">`</span><span class="sc">${</span><span class="dv">45</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(s<span class="op">.</span><span class="at">pos</span> <span class="op">/</span> <span class="dv">15</span>) <span class="op">*</span> <span class="dv">33</span><span class="sc">}</span><span class="vs">px`</span></span>
+<span id="cb7-421"><a href=""></a>  }</span>
+<span id="cb7-422"><a href=""></a></span>
+<span id="cb7-423"><a href=""></a>  <span class="co">// reset puts everyone back in their original spot. otherwise each group</span></span>
+<span id="cb7-424"><a href=""></a>  <span class="co">// fills reds from the top and blues below them. people who stay in their</span></span>
+<span id="cb7-425"><a href=""></a>  <span class="co">// group keep their spot if it's still in their color's zone, and</span></span>
+<span id="cb7-426"><a href=""></a>  <span class="co">// everyone else (switchers, plus stayers whose zone moved) takes the</span></span>
+<span id="cb7-427"><a href=""></a>  <span class="co">// first free spot in their zone, so as few people move as possible</span></span>
+<span id="cb7-428"><a href=""></a>  wrap<span class="op">.</span><span class="at">update</span> <span class="op">=</span> assign <span class="kw">=&gt;</span> {</span>
+<span id="cb7-429"><a href=""></a>    <span class="cf">if</span> (assign <span class="op">===</span> ra_natural) {</span>
+<span id="cb7-430"><a href=""></a>      spots <span class="op">=</span> natural<span class="op">.</span><span class="fu">map</span>(s <span class="kw">=&gt;</span> ({<span class="op">...</span>s}))</span>
+<span id="cb7-431"><a href=""></a>    } <span class="cf">else</span> {</span>
+<span id="cb7-432"><a href=""></a>      <span class="cf">for</span> (<span class="kw">const</span> g <span class="kw">of</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>]) {</span>
+<span id="cb7-433"><a href=""></a>        <span class="kw">const</span> members <span class="op">=</span> people<span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> i)<span class="op">.</span><span class="fu">filter</span>(i <span class="kw">=&gt;</span> assign[i] <span class="op">===</span> g)</span>
+<span id="cb7-434"><a href=""></a>        <span class="kw">const</span> nRed <span class="op">=</span> members<span class="op">.</span><span class="fu">filter</span>(i <span class="kw">=&gt;</span> people[i]<span class="op">.</span><span class="at">red</span> <span class="op">===</span> <span class="dv">1</span>)<span class="op">.</span><span class="at">length</span></span>
+<span id="cb7-435"><a href=""></a>        <span class="kw">const</span> zone <span class="op">=</span> i <span class="kw">=&gt;</span> people[i]<span class="op">.</span><span class="at">red</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> [<span class="dv">0</span><span class="op">,</span> nRed] <span class="op">:</span> [nRed<span class="op">,</span> members<span class="op">.</span><span class="at">length</span>]</span>
+<span id="cb7-436"><a href=""></a>        <span class="kw">const</span> inZone <span class="op">=</span> (i<span class="op">,</span> pos) <span class="kw">=&gt;</span> pos <span class="op">&gt;=</span> <span class="fu">zone</span>(i)[<span class="dv">0</span>] <span class="op">&amp;&amp;</span> pos <span class="op">&lt;</span> <span class="fu">zone</span>(i)[<span class="dv">1</span>]</span>
+<span id="cb7-437"><a href=""></a>        <span class="kw">const</span> taken <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>()</span>
+<span id="cb7-438"><a href=""></a>        <span class="kw">const</span> stay <span class="op">=</span> members<span class="op">.</span><span class="fu">filter</span>(i <span class="kw">=&gt;</span> spots[i]<span class="op">.</span><span class="at">p</span> <span class="op">===</span> g <span class="op">&amp;&amp;</span> <span class="fu">inZone</span>(i<span class="op">,</span> spots[i]<span class="op">.</span><span class="at">pos</span>))</span>
+<span id="cb7-439"><a href=""></a>        stay<span class="op">.</span><span class="fu">forEach</span>(i <span class="kw">=&gt;</span> taken<span class="op">.</span><span class="fu">add</span>(spots[i]<span class="op">.</span><span class="at">pos</span>))</span>
+<span id="cb7-440"><a href=""></a>        members<span class="op">.</span><span class="fu">filter</span>(i <span class="kw">=&gt;</span> <span class="op">!</span>stay<span class="op">.</span><span class="fu">includes</span>(i))<span class="op">.</span><span class="fu">forEach</span>(i <span class="kw">=&gt;</span> {</span>
+<span id="cb7-441"><a href=""></a>          <span class="kw">let</span> pos <span class="op">=</span> <span class="fu">zone</span>(i)[<span class="dv">0</span>]</span>
+<span id="cb7-442"><a href=""></a>          <span class="cf">while</span> (taken<span class="op">.</span><span class="fu">has</span>(pos)) pos<span class="op">++</span></span>
+<span id="cb7-443"><a href=""></a>          taken<span class="op">.</span><span class="fu">add</span>(pos)</span>
+<span id="cb7-444"><a href=""></a>          spots[i] <span class="op">=</span> {<span class="dt">p</span><span class="op">:</span> g<span class="op">,</span> pos}</span>
+<span id="cb7-445"><a href=""></a>        })</span>
+<span id="cb7-446"><a href=""></a>      }</span>
+<span id="cb7-447"><a href=""></a>    }</span>
+<span id="cb7-448"><a href=""></a>    spots<span class="op">.</span><span class="fu">forEach</span>((s<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">place</span>(icons[i]<span class="op">,</span> s))</span>
+<span id="cb7-449"><a href=""></a>  }</span>
+<span id="cb7-450"><a href=""></a></span>
+<span id="cb7-451"><a href=""></a>  spots<span class="op">.</span><span class="fu">forEach</span>((s<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="fu">place</span>(icons[i]<span class="op">,</span> s))</span>
+<span id="cb7-452"><a href=""></a>  <span class="cf">return</span> wrap</span>
+<span id="cb7-453"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell hidden">
+<div class="sourceCode cell-code hidden" id="cb8" data-startfrom="458" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 457;"><span id="cb8-458"><a href=""></a>ra_people<span class="op">.</span><span class="fu">update</span>(ra_assign)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="rct-difference-in-mean-outcomes-unbiased-prog-effect-estimate" class="slide level2">
+<h2>RCT: Difference in Mean Outcomes = <br>Unbiased Prog Effect Estimate</h2>
+<ul>
+<li>After random assignment:
+<ul>
+<li>Participant Avg Baseline Vars <span class="math inline">\(\approx\)</span> Comparison Avg Baseline Vars</li>
+<li>Participant Avg <span class="math inline">\(Y(0) \approx\)</span> Comparison Avg <span class="math inline">\(Y(0)\)</span></li>
+<li>Prog Effect <span class="math inline">\(\approx\)</span> Participant Avg <span class="math inline">\(Y -\)</span> Comparison Avg <span class="math inline">\(Y\)</span></li>
+</ul></li>
+</ul>
+<div class="fragment" data-fragment-index="1" style="display: flex; justify-content: center;">
+<p>🌟🥇🏆 <strong><em>“Gold standard” design</em></strong> 🏆🥇🌟</p>
+</div>
+<ul>
+<li class="fragment" data-fragment-index="2">
+Useful to combine with covariate adjustment to help reduce noise from chance baseline imbalance
+</li>
+<ul class="fragment" data-fragment-index="2">
+<li>
+Especially using a baseline measure of the outcome
+</li>
+</ul>
+</ul>
+</section>
+<section id="rct-validity-threat-1-attrition" class="slide level2 smaller">
+<h2>RCT Validity Threat 1: Attrition</h2>
+<ul>
+<li>Inevitably, people will <strong>attrit</strong>: drop out of the study or be unreachable at follow-up</li>
+<li>Their <strong><em>data is missing</em></strong></li>
+<li><strong>Differential attrition</strong>: when groups have different attrition rates, this can <strong><em>create selection bias</em></strong></li>
+</ul>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-17-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="rct-validity-threat-2-consent" class="slide level2">
+<h2>RCT Validity Threat 2: Consent</h2>
+<ul>
+<li>Finding people who consent to being in RCTs is a big challenge
+<ul>
+<li>Consent rates frequently well below 50%</li>
+</ul></li>
+<li>Mostly an external validity issue: can <strong><em>only learn about effects for population of people willing to consent</em></strong></li>
+<li>But if <strong><em>randomization is done prior to consent</em></strong>, this creates potential for <strong><em>differential consent</em></strong>
+<ul>
+<li>This can <strong><em>create selection bias</em></strong> in the same way as differential attrition</li>
+<li>“Waitlist control” designs may face this (ask me how I know…😓)</li>
+</ul></li>
+</ul>
+</section>
+<section id="itt-tot" class="slide level2 smaller">
+<h2>Intent-to-Treat vs.&nbsp;<br>Treatment-on-the-Treated</h2>
+<ul>
+<li>Some people assigned to a program don’t do it
+<ul>
+<li>And some who are not assigned will do it anyway</li>
+</ul></li>
+<li><strong>Intent-to-treat (ITT)</strong>: effect of being <strong><em>assigned to a program</em></strong></li>
+<li><strong>Treatment-on-the-treated (TOT)</strong>: effect of actually <strong><em>doing the program</em></strong><a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a>
+</li><li class="fragment" data-fragment-index="1">
+ITT is the straightforward estimate:
+</li>
+</ul>
+
+<p><span class="fragment" data-fragment-index="1"><span class="math inline">\(ITT =Y_{\textit{assigned to particiate}} - Y_{\textit{assigned to control}}\)</span></span></p>
+<ul class="fragment" data-fragment-index="2">
+<li>
+But all effects come from just the subset who actually participate (and wouldn’t have if assigned to control)
+</li>
+<ul>
+<li>
+So the effect of participation must be larger than ITT
+</li>
+</ul>
+</ul>
+<p><span class="fragment" data-fragment-index="2"><span class="math inline">\(TOT = \frac{ITT}{\textit{% induced to participate}}\)</span>   <a href="#/appendix-tot" style="font-size: 0.7em;">see appendix for details</a></span></p>
+<aside></aside></section>
+<section id="unit-of-assignment" class="slide level2">
+<h2>Unit of Assignment</h2>
+<ul>
+<li><strong>Individual</strong> assignment: assign individual people (or whatever your unit of analysis) to program or control</li>
+<li><strong>Cluster</strong> assignment: assign entire clusters of people/units to program or control
+<ul>
+<li>Example: entire schools of students are assigned to either participate or not</li>
+</ul></li>
+<li>Cluster-randomized typically requires a large number of clusters (eg schools) to participate in study for adequate statistical power</li>
+</ul>
+</section>
+<section id="treatment-contrast" class="slide level2 smaller">
+<h2>Treatment Contrast</h2>
+<ul>
+<li><strong>Treatment contrast</strong>: difference between what the <strong><em>control group gets</em></strong> and what the program group gets
+<ul>
+<li><strong>Counterfactual condition</strong>: the services/conditions for the control group</li>
+</ul></li>
+<li>“<strong>Business as usual</strong>”: most common counterfactual condition, where control group gets whatever services they would typically get
+<ul>
+<li>These “business as usual” conditions can vary from place-to-place or over time</li>
+<li>This variation can have big implications on the estimated program effects</li>
+</ul></li>
+<li>Example: effect of Head Start
+<ul>
+<li>If most children in the community can already access free high-quality pre-k, the effect may be small</li>
+<li>But if most children are unable to access pre-k, the effect may be large</li>
+</ul></li>
+<li>Many different types of treatment contrasts can be set up; each answers a different evaluation question</li>
+</ul>
+</section></section>
+<section>
+<section id="regression-discontinuity" class="title-slide slide level1 center">
+<h1>Regression Discontinuity</h1>
+
+</section>
+<section id="example-for-rd-intuition" class="slide level2">
+<h2>Example for RD Intuition</h2>
+<ul>
+<li>Students must all take a placement test; if they score below 180, they must take a remedial course</li>
+<li>We want to know the effect of the remedial course on main course performance</li>
+<li>We can use a <strong>regression discontinuity</strong> (RD) design:
+<ul>
+<li>Participant group: students who <strong><em>scored 179</em></strong></li>
+<li>Control group: students who <strong><em>scored 180</em></strong></li>
+</ul></li>
+<li>These students are <strong><em>basically the same</em></strong>, with just 1 point difference</li>
+<li>So any difference in course performance we observe should be due to the remedial course rather than confounders</li>
+</ul>
+</section>
+<section id="rd-takes-advantage-of-assignment-variables" class="slide level2 smaller">
+<h2>RD Takes Advantage of <br>“Assignment Variables”</h2>
+<ul>
+<li><strong>Assignment variable</strong>:<a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a> variable that assigns people to program</li>
+<li><strong>Cutoff</strong>:<a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a> the point on the assignment variable where…
+<ul>
+<li>People with values below are assigned to one group (eg program)</li>
+<li>People with values above are assigned to the other group (eg control)</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment" data-fragment-index="1">
+Assignment to program is “<strong><em>as good as random</em></strong>” if we know people’s assignment variable value
+</li>
+</ul>
+<aside></aside></section>
+<section id="rd-effect-size-of-discontinuity" class="slide level2 smaller">
+<h2>RD Effect = Size of “Discontinuity”</h2>
+<ul>
+<li>Program assignment based on cutoff score creates <strong><em>“discontinuity” in the relationship</em></strong> between <strong><em>assignment variable &amp; outcome</em></strong></li>
+<li>RD effect estimate = size of the discontinuity = diff btwn those just below &amp; above cutoff</li>
+</ul>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment fade-in-then-out" data-fragment-index="2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="rd-effects-are-local-to-people-at-the-cutoff" class="slide level2 smaller">
+<h2>RD Effects Are “Local” to <br>People At the Cutoff</h2>
+<ul>
+<li>RD estimates effects <strong><em>only for people just below &amp; above</em></strong> the cutoff</li>
+<li><strong>Local average treatment effect</strong> (LATE): the effect is “local” to people with these assignment variable scores</li>
+<li><strong><em>Effects may be different</em></strong> for people with <strong><em>different values on the assignment variable</em></strong></li>
+<li>For instance, in our example:</li>
+</ul>
+<p><span class="math display">\[
+Prog \: Effect_{RD} = Y_{place \: test = 179} - Y_{place \: test = 180}
+\]</span></p>
+<ul>
+<li>But people who scored eg 160 on the placement test may have benefitted less (or more) from the remedial course</li>
+<li><strong><em>RD cannot tell us about the effects for people who scored far from the cutoff</em></strong> on the placement test</li>
+</ul>
+</section>
+<section id="biggest-threat-to-validity-manipulation-at-the-cutoff" class="slide level2">
+<h2>Biggest Threat to Validity: <br>Manipulation at the Cutoff</h2>
+<ul>
+<li>Someone may <strong><em>know about the cutoff</em></strong> and <strong><em>intentionally try to score higher or lower</em></strong> to get into (or out of) the program</li>
+<li>Introduces <strong><em>selection bias</em></strong>, as <strong><em>people are now “choosing”</em></strong> whether to do the program, <strong><em>rather than their score “assigning”</em></strong> them</li>
+<li>Check for <strong>bunching</strong> to see if this might be happening</li>
+</ul>
+</section>
+<section id="bunching-check" class="slide level2">
+<h2>Bunching Check</h2>
+<ul>
+<li>Look at a histogram, which shows the number of people at each assignment variable value</li>
+<li>Many more scores just to one side of the cutoff than the other = evidence of manipulation</li>
+</ul>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-24-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="covariate-discontinuities-possible-selection-bias" class="slide level2">
+<h2>Covariate Discontinuities = <br>Possible Selection Bias</h2>
+<ul>
+<li>If there are <strong><em>discontinuities in covariates at the cutoff</em></strong>, the groups are <strong><em>imbalanced</em></strong>
+<ul>
+<li>These covariates will <strong><em>create selection bias</em></strong> if they affect outcome</li>
+</ul></li>
+<li>Check for this by:
+<ul>
+<li>Plotting the relationships between the assignment variable &amp; baseline covariates</li>
+<li>Estimating the “effect” of the assignment var on the covariate, as if it was the outcome; large estimates are sign of trouble</li>
+</ul></li>
+</ul>
+</section>
+<section id="rd-estimation-requires-modeling-relationship-btwn-assign-var-outcome" class="slide level2 smaller">
+<h2>RD Estimation Requires Modeling <br>Relationship Btwn Assign Var &amp; Outcome</h2>
+<ul>
+<li>Conceptually, RD is difference between those just below and above the cutoff</li>
+<li>But we typically don’t have enough observations <em>just</em> below &amp; above</li>
+<li>So we estimate the relationship between assign var &amp; outcome on both sides of cutoff</li>
+<li>RD effect estimate = gap between the relationship lines at the cutoff</li>
+</ul>
+<div style="display: flex; justify-content: center">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bandwidth-how-far-from-the-cutoff-do-we-go" class="slide level2 smaller">
+<h2>Bandwidth: <br>How Far From the Cutoff Do We Go?</h2>
+<ul>
+<li>The <strong><em>further we get from cutoff</em></strong>, the <strong><em>more different people become</em></strong>
+<ul>
+<li>And thus the <strong><em>more we rely on statistical estimation</em></strong> to get relationship for people near cutoff</li>
+</ul></li>
+<li>So we <strong><em>limit our sample to those within a certain distance</em></strong> from cutoff, aka <strong>bandwidth</strong></li>
+</ul>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-smaller-the-bandwidth-the-smaller-the-sample" class="slide level2">
+<h2>The Smaller the Bandwidth, the <br>Smaller the Sample…</h2>
+<ul>
+<li>…and therefore the <strong><em>less statistical power</em></strong> we have</li>
+<li>So there’s always a <strong><em>tradeoff</em></strong> with bandwidth: <strong><em>internal validity vs.&nbsp;precision</em></strong></li>
+</ul>
+<div class="r-stack">
+<div class="fragment fade-out" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture-8_impact_controlled_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="comparing-strategies" class="title-slide slide level1 center">
+<h1>Comparing Strategies</h1>
+
+</section>
+<section id="non-randomized-vs.-controlled-external-vs.-internal-validity" class="slide level2 smaller">
+<h2>Non-Randomized vs.&nbsp;Controlled &amp; <br>External vs.&nbsp;Internal Validity</h2>
+<ul>
+<li><strong><em>Non-randomized</em></strong> strategies (covariate-based, DiD) <strong><em>observe the world as it naturally occurs</em></strong>
+<ul>
+<li>Therefore, they often have <strong><em>higher external validity</em></strong></li>
+<li>But they <strong><em>can’t control who accesses program</em></strong>, so have <strong><em>lower internal validity</em></strong></li>
+</ul></li>
+<li><strong><em>Controlled</em></strong> strategies (RCT, RD) <strong><em>assign people</em></strong> to program &amp; comparison groups
+<ul>
+<li>They have <strong><em>higher internal validity</em></strong> due to this control</li>
+<li>But <strong><em>RCTs are unnatural</em></strong> scenarios, so they may have <strong><em>lower external validity</em></strong></li>
+<li>And <strong><em>RD</em></strong> only estimates <strong><em>effects for those near cutoff</em></strong>, so they also may have <strong><em>lower external validity</em></strong></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
+
+</section>
+<section id="appendix-tot" class="slide level2 parens smaller">
+<h2>“Scale Up” the ITT Estimate to <br>Get TOT</h2>
+<p><a href="#/itt-tot" style="font-size: 0.7em;">back to main slide</a></p>
+<ul>
+<li>All effects must come from those assigned to participate who
+<ol type="a">
+<li>Actually participated</li>
+<li>Wouldn’t have participated if assigned to control</li>
+</ol></li>
+<li><strong><em>Otherwise, potential outcomes are the same</em></strong> regardless of assignment</li>
+<li>So the difference in outcomes should be <strong><em>averaged across just this subset of people</em></strong>, rather than the whole participant group</li>
+</ul>
+<div class="columns fragment" data-fragment-index="1">
+<div class="column center-table" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>assignment</th>
+<th>participated</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>participate</td>
+<td>70%</td>
+</tr>
+<tr class="even">
+<td>control</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<p>% “treated” <span class="math inline">\(= 70\% - 20\% = 50\%\)</span></p>
+<p><span class="fragment" data-fragment-index="2">TOT <span class="math inline">\(= \frac{ITT}{0.50}\)</span></span></p>
+<p><span class="fragment" data-fragment-index="3">So if ITT is, for example, 10:</span></p>
+<p><span class="fragment" data-fragment-index="3">TOT <span class="math inline">\(= \frac{10}{0.50} = 20\)</span></span></p>
+</div></div>
+
+</section></section>
+<section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>In practice, comparison groups are usually referred to as the “control” group, even in quasi-experimental designs like DiD</p></li>
+<li id="fn2"><p>Another name for TOT is complier average causal effect (CACE). I like CACE better but it’s more technical so we’ll stick with TOT for class.</p></li>
+<li id="fn3"><p>Also called “running” or “forcing” variable</p></li>
+<li id="fn4"><p>Also called “cut point”, “cut score”, or “threshold”</p></li>
+</ol>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lecture-8_impact_controlled_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIHBhcnRpY2lwYXRlIGFzIFIgbWFkZSBpdDogZmlyc3QgMjUwIHBhcnRpY2lwYW50cywgbGFzdCAyNTAgY29tcGFyaXNvblxucmFfbmF0dXJhbCA9IHRyYW5zcG9zZShyYV9kYXRhKS5tYXAoZCA9PiBkLnBhcnRpY2lwYXRlKVxuXG4vLyBibHVyIHNvIHRoZSBhcnJvdyBrZXlzIC8gc3BhY2Uga2VlcCBtb3ZpbmcgdGhlIHNsaWRlcyBhZnRlciBhIGNsaWNrXG5yYV9ibHVyID0gKCkgPT4gZG9jdW1lbnQuYWN0aXZlRWxlbWVudD8uYmx1cigpXG5cbi8vIFJhbmRvbWl6ZSBzaHVmZmxlcyB3aG8gcGFydGljaXBhdGVzIChzdGlsbCAyNTAgcGVyIGdyb3VwKTsgUmVzZXQgcHV0c1xuLy8gYmFjayB0aGUgb3JpZ2luYWwgYXNzaWdubWVudFxudmlld29mIHJhX2Fzc2lnbiA9IElucHV0cy5idXR0b24oW1xuICBbXCJyYW5kb21pemVcIiwgKCkgPT4geyByYV9ibHVyKCk7IHJldHVybiBkMy5zaHVmZmxlKHJhX25hdHVyYWwuc2xpY2UoKSkgfV0sXG4gIFtcInJlc2V0IHRvIG5hdHVyYWxcIiwgKCkgPT4geyByYV9ibHVyKCk7IHJldHVybiByYV9uYXR1cmFsIH1dXG5dLCB7dmFsdWU6IHJhX25hdHVyYWx9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiLy8gZGF0YSB3aXRoIHRoZSBjdXJyZW50IGFzc2lnbm1lbnQ6IHBhcnRpY2lwYXRlIGFuZCBncm91cCBmb2xsb3cgaXQsXG4vLyBldmVyeXRoaW5nIGVsc2Ugc3RheXMgd2l0aCB0aGUgcGVyc29uXG5yYV9jdXJyZW50ID0gdHJhbnNwb3NlKHJhX2RhdGEpLm1hcCgoZCwgaSkgPT4gKHtcbiAgLi4uZCxcbiAgcGFydGljaXBhdGU6IHJhX2Fzc2lnbltpXSxcbiAgZ3JvdXA6IHJhX2Fzc2lnbltpXSA9PT0gMSA/IFwicGFydGljaXBhbnRcIiA6IFwiY29tcGFyaXNvblwiXG59KSlcblxucmFfdmFycyA9IE9iamVjdC5rZXlzKHJhX2RhdGEpLmZpbHRlcih2ID0+ICFbXCJwYXJ0aWNpcGF0ZVwiLCBcImdyb3VwXCJdLmluY2x1ZGVzKHYpKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiLy8gbWVhbnMgb2YgZWFjaCB2YXJpYWJsZSBieSBncm91cFxucmFfbWVhbiA9ICh2LCBwKSA9PiBkMy5tZWFuKHJhX2N1cnJlbnQuZmlsdGVyKGQgPT4gZC5wYXJ0aWNpcGF0ZSA9PT0gcCksIGQgPT4gZFt2XSlcblxuLy8gaG93IGVhY2ggdmFyaWFibGUncyBtZWFuIGlzIHNob3duICh0aGUgMC8xIHZhcmlhYmxlcyBhcyBwZXJjZW50YWdlcylcbnJhX2ZtdCA9IHtcbiAgY29uc3QgcGN0ID0gdiA9PiBgJHtNYXRoLnJvdW5kKHYgKiAxMDApfSVgXG4gIHJldHVybiB7XG4gICAgdGVzdF9zY29yZTogdiA9PiB2LnRvRml4ZWQoMCksXG4gICAgaW5jb21lOiB2ID0+IGAkJHt2LnRvRml4ZWQoMCl9a2AsXG4gICAgYWdlOiB2ID0+IHYudG9GaXhlZCgxKSxcbiAgICBwcmVrOiBwY3QsXG4gICAgcmVkOiBwY3QsXG4gICAgYmx1ZTogcGN0LFxuICAgIHkwOiB2ID0+IHYudG9GaXhlZCgwKVxuICB9XG59XG5cbi8vIG5hbWUgc2hvd24gZm9yIGVhY2ggdmFyaWFibGVcbnJhX2xhYmVscyA9ICh7XG4gIHRlc3Rfc2NvcmU6IFwiQmFzZSBUZXN0IFNjb3JlXCIsXG4gIGluY29tZTogXCJGYW0gSW5jb21lXCIsXG4gIGFnZTogXCJBZ2VcIixcbiAgcHJlazogXCJEaWQgUHJlLUtcIixcbiAgcmVkOiBcIlJlZFwiLFxuICBibHVlOiBcIkJsdWVcIixcbiAgeTA6IFwiWSgwKVwiXG59KVxuXG4vLyB0aGUgeTAgcm93IGlzIGJvbGQgaXRhbGljIChzdHlsZXMgaW4gc3R5bGVfOC5jc3MpXG5odG1sYDxkaXYgY2xhc3M9XCJyYS1tZWFuc1wiPjx0YWJsZT5cbiAgPHRoZWFkPjx0cj48dGg+VmFyaWFibGU8L3RoPjx0aD5QYXJ0aWNpcGFudDwvdGg+PHRoPkNvbXBhcmlzb248L3RoPjwvdHI+PC90aGVhZD5cbiAgPHRib2R5PiR7cmFfdmFycy5tYXAodiA9PiBodG1sYDx0ciBjbGFzcz0ke3YgPT09IFwieTBcIiA/IFwicmEteTBcIiA6IG51bGx9PlxuICAgIDx0ZD4ke3JhX2xhYmVsc1t2XX08L3RkPjx0ZD4ke3JhX2ZtdFt2XShyYV9tZWFuKHYsIDEpKX08L3RkPjx0ZD4ke3JhX2ZtdFt2XShyYV9tZWFuKHYsIDApKX08L3RkPlxuICA8L3RyPmApfTwvdGJvZHk+XG48L3RhYmxlPjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIGZ1bGwgZGF0YSB0YWJsZSwgY29sbGFwc2VkIHVudGlsIHRoZSBmdWxsIGRhdGEgYnV0dG9uIGlzIGNsaWNrZWQuXG4vLyBwYXJ0aWNpcGF0ZSBpcyBsZWZ0IG91dCB0byBzYXZlIHNwYWNlIChncm91cCBzaG93cyB0aGUgc2FtZSB0aGluZylcbnJhX2Z1bGxfY29scyA9IE9iamVjdC5rZXlzKHJhX2RhdGEpLmZpbHRlcih2ID0+IHYgIT09IFwicGFydGljaXBhdGVcIilcblxuLy8gYnVpbHQgb25jZSBlYWNoIHRpbWUgaXQncyBvcGVuZWQ7IHJhX2Z1bGwudXBkYXRlKCkgdGhlbiByZXdyaXRlcyB0aGVcbi8vIGNlbGxzIGluIHBsYWNlIHdoZW4gdGhlIGRhdGEgY2hhbmdlcywgcmF0aGVyIHRoYW4gcmVkcmF3aW5nIHRoZSB0YWJsZVxuLy8gKHdoaWNoIGZsaWNrZXJzIGFuZCBsb3NlcyB0aGUgc2Nyb2xsIHBvc2l0aW9uKVxucmFfZnVsbCA9IHtcbiAgaWYgKCFyYV9zaG93X2Z1bGwpIHJldHVybiBodG1sYGBcbiAgY29uc3QgZm10ID0geCA9PiB0eXBlb2YgeCA9PT0gXCJudW1iZXJcIiAmJiAhTnVtYmVyLmlzSW50ZWdlcih4KSA/IHgudG9GaXhlZCgxKSA6IHhcbiAgY29uc3Qgcm93cyA9IHRyYW5zcG9zZShyYV9kYXRhKS5tYXAoKCkgPT4gcmFfZnVsbF9jb2xzLm1hcCgoKSA9PiBodG1sYDx0ZD48L3RkPmApKVxuICBjb25zdCBlbCA9IGh0bWxgPGRpdiBjbGFzcz1cInJhLWZ1bGxcIj48dGFibGU+XG4gICAgPHRoZWFkPjx0cj4ke3JhX2Z1bGxfY29scy5tYXAodiA9PiBodG1sYDx0aD4ke3Z9PC90aD5gKX08L3RyPjwvdGhlYWQ+XG4gICAgPHRib2R5PiR7cm93cy5tYXAoY2VsbHMgPT4gaHRtbGA8dHI+JHtjZWxsc308L3RyPmApfTwvdGJvZHk+XG4gIDwvdGFibGU+PC9kaXY+YFxuICBlbC51cGRhdGUgPSBkYXRhID0+IGRhdGEuZm9yRWFjaCgoZCwgaSkgPT4gcmFfZnVsbF9jb2xzLmZvckVhY2goKHYsIGopID0+IHtcbiAgICByb3dzW2ldW2pdLnRleHRDb250ZW50ID0gZm10KGRbdl0pXG4gIH0pKVxuICByZXR1cm4gZWxcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InJhX2Z1bGwudXBkYXRlPy4ocmFfY3VycmVudClcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiByYV9zaG93X2Z1bGwgPSBJbnB1dHMuYnV0dG9uKFwiZnVsbCBkYXRhXCIsIHt2YWx1ZTogZmFsc2UsIHJlZHVjZTogdiA9PiB7IHJhX2JsdXIoKTsgcmV0dXJuICF2IH19KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC03IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiLy8gb25lIHBlcnNvbiBpY29uIHBlciByb3cgb2YgdGhlIGRhdGEsIGNvbG9yZWQgYnkgcmVkIC8gYmx1ZSwgaW4gYSBibG9ja1xuLy8gcGVyIGdyb3VwIDE1IGFjcm9zcyAodGhlIGJpZ2dlc3QgaWNvbnMgdGhhdCBmaWxsIHRoZSBzbGlkZSdzIGhlaWdodDpcbi8vIDE3IHJvd3MsIHRoZSBsYXN0IG9uZSBwYXJ0aWFsKS4gYnVpbHQgb25jZTsgcmFfcGVvcGxlLnVwZGF0ZSgpIG1vdmVzXG4vLyB0aGVtIGFmdGVyd2FyZHMgc28gdGhlIG1vdmVzIGFuaW1hdGUgKHN0eWxlcyBpbiBzdHlsZV84LmNzcylcbnJhX3Blb3BsZSA9IHtcbiAgY29uc3QgcGVvcGxlID0gdHJhbnNwb3NlKHJhX2RhdGEpXG4gIGNvbnN0IHdyYXAgPSBodG1sYDxkaXYgY2xhc3M9XCJyYS1wZW9wbGVcIj5cbiAgICA8ZGl2IGNsYXNzPVwicmEtaGVhZFwiIHN0eWxlPVwibGVmdDogMCVcIj5QYXJ0aWNpcGFudDwvZGl2PlxuICAgIDxkaXYgY2xhc3M9XCJyYS1oZWFkXCIgc3R5bGU9XCJsZWZ0OiA1NCVcIj5Db21wYXJpc29uPC9kaXY+XG4gIDwvZGl2PmBcbiAgY29uc3QgaWNvbnMgPSBwZW9wbGUubWFwKGQgPT4ge1xuICAgIGNvbnN0IGVsID0gaHRtbGA8ZGl2IGNsYXNzPVwicmEtcGVyc29uXCI+JHtzdmdgPHN2ZyB2aWV3Qm94PVwiMCAwIDIwIDQwXCIgZmlsbD0ke2QucmVkID09PSAxID8gXCIjRUUxMjg5XCIgOiBcIiMwMEIyRUVcIn0+XG4gICAgICA8Y2lyY2xlIGN4PVwiMTBcIiBjeT1cIjZcIiByPVwiNS41XCIvPlxuICAgICAgPHBhdGggZD1cIk01IDEzaDEwYTMgMyAwIDAgMSAzIDN2MTFoLTMuNXYxMmgtMy41di0xMWgtMnYxMWgtMy41di0xMmgtMy41di0xMWEzIDMgMCAwIDEgMy0zelwiLz5cbiAgICA8L3N2Zz5gfTwvZGl2PmBcbiAgICB3cmFwLmFwcGVuZChlbClcbiAgICByZXR1cm4gZWxcbiAgfSlcblxuICAvLyBlYWNoIHBlcnNvbidzIHNwb3Q6IHRoZWlyIGdyb3VwIChwKSBhbmQgcG9zaXRpb24gd2l0aGluIGl0cyBibG9ja1xuICBjb25zdCBjb3VudCA9IHsxOiAwLCAwOiAwfVxuICBjb25zdCBuYXR1cmFsID0gcGVvcGxlLm1hcChkID0+ICh7cDogZC5wYXJ0aWNpcGF0ZSwgcG9zOiBjb3VudFtkLnBhcnRpY2lwYXRlXSsrfSkpXG4gIGxldCBzcG90cyA9IG5hdHVyYWwubWFwKHMgPT4gKHsuLi5zfSkpXG4gIGNvbnN0IHBsYWNlID0gKGVsLCBzKSA9PiB7XG4gICAgZWwuc3R5bGUubGVmdCA9IGAkeyhzLnAgPT09IDEgPyAwIDogNTQpICsgKHMucG9zICUgMTUpICogKDQ2IC8gMTUpfSVgXG4gICAgZWwuc3R5bGUudG9wID0gYCR7NDUgKyBNYXRoLmZsb29yKHMucG9zIC8gMTUpICogMzN9cHhgXG4gIH1cblxuICAvLyByZXNldCBwdXRzIGV2ZXJ5b25lIGJhY2sgaW4gdGhlaXIgb3JpZ2luYWwgc3BvdC4gb3RoZXJ3aXNlIGVhY2ggZ3JvdXBcbiAgLy8gZmlsbHMgcmVkcyBmcm9tIHRoZSB0b3AgYW5kIGJsdWVzIGJlbG93IHRoZW0uIHBlb3BsZSB3aG8gc3RheSBpbiB0aGVpclxuICAvLyBncm91cCBrZWVwIHRoZWlyIHNwb3QgaWYgaXQncyBzdGlsbCBpbiB0aGVpciBjb2xvcidzIHpvbmUsIGFuZFxuICAvLyBldmVyeW9uZSBlbHNlIChzd2l0Y2hlcnMsIHBsdXMgc3RheWVycyB3aG9zZSB6b25lIG1vdmVkKSB0YWtlcyB0aGVcbiAgLy8gZmlyc3QgZnJlZSBzcG90IGluIHRoZWlyIHpvbmUsIHNvIGFzIGZldyBwZW9wbGUgbW92ZSBhcyBwb3NzaWJsZVxuICB3cmFwLnVwZGF0ZSA9IGFzc2lnbiA9PiB7XG4gICAgaWYgKGFzc2lnbiA9PT0gcmFfbmF0dXJhbCkge1xuICAgICAgc3BvdHMgPSBuYXR1cmFsLm1hcChzID0+ICh7Li4uc30pKVxuICAgIH0gZWxzZSB7XG4gICAgICBmb3IgKGNvbnN0IGcgb2YgWzEsIDBdKSB7XG4gICAgICAgIGNvbnN0IG1lbWJlcnMgPSBwZW9wbGUubWFwKChkLCBpKSA9PiBpKS5maWx0ZXIoaSA9PiBhc3NpZ25baV0gPT09IGcpXG4gICAgICAgIGNvbnN0IG5SZWQgPSBtZW1iZXJzLmZpbHRlcihpID0+IHBlb3BsZVtpXS5yZWQgPT09IDEpLmxlbmd0aFxuICAgICAgICBjb25zdCB6b25lID0gaSA9PiBwZW9wbGVbaV0ucmVkID09PSAxID8gWzAsIG5SZWRdIDogW25SZWQsIG1lbWJlcnMubGVuZ3RoXVxuICAgICAgICBjb25zdCBpblpvbmUgPSAoaSwgcG9zKSA9PiBwb3MgPj0gem9uZShpKVswXSAmJiBwb3MgPCB6b25lKGkpWzFdXG4gICAgICAgIGNvbnN0IHRha2VuID0gbmV3IFNldCgpXG4gICAgICAgIGNvbnN0IHN0YXkgPSBtZW1iZXJzLmZpbHRlcihpID0+IHNwb3RzW2ldLnAgPT09IGcgJiYgaW5ab25lKGksIHNwb3RzW2ldLnBvcykpXG4gICAgICAgIHN0YXkuZm9yRWFjaChpID0+IHRha2VuLmFkZChzcG90c1tpXS5wb3MpKVxuICAgICAgICBtZW1iZXJzLmZpbHRlcihpID0+ICFzdGF5LmluY2x1ZGVzKGkpKS5mb3JFYWNoKGkgPT4ge1xuICAgICAgICAgIGxldCBwb3MgPSB6b25lKGkpWzBdXG4gICAgICAgICAgd2hpbGUgKHRha2VuLmhhcyhwb3MpKSBwb3MrK1xuICAgICAgICAgIHRha2VuLmFkZChwb3MpXG4gICAgICAgICAgc3BvdHNbaV0gPSB7cDogZywgcG9zfVxuICAgICAgICB9KVxuICAgICAgfVxuICAgIH1cbiAgICBzcG90cy5mb3JFYWNoKChzLCBpKSA9PiBwbGFjZShpY29uc1tpXSwgcykpXG4gIH1cblxuICBzcG90cy5mb3JFYWNoKChzLCBpKSA9PiBwbGFjZShpY29uc1tpXSwgcykpXG4gIHJldHVybiB3cmFwXG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTgiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyYV9wZW9wbGUudXBkYXRlKHJhX2Fzc2lnbilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgncmFfYXNzaWduJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3JhX3Nob3dfZnVsbCcpIn1dfQ==
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../..";
+    window._ojs.paths.docToRoot = "";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

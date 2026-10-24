@@ -1,0 +1,1036 @@
+---
+title: "Impact Evaluation: Controlled Comparison Strategies"
+subtitle: "Week 8<br>REF 770: Program Evaluation"
+output-file: index
+output-ext: html
+format: revealjs
+css: assets/style.css
+pdf-separate-fragments: true
+echo: false
+
+html-math-method: 
+  method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+
+resources: assets/Roboto-Regular.ttf
+
+reference-location: document
+language:
+  en:
+    section-title-footnotes: Footnotes
+
+chalkboard:
+  buttons: false
+---
+
+## Recap from Last Two Classes {.smaller}
+
+- We've been observing people out in the world, in their natural state
+- We want to know effects of programs for people who chose to participate
+- We use people who did not participate as comparison group, to estimate participants' counterfactuals
+  - But factors that cause participation & also affect outcomes create selection bias
+</ul><li class="fragment" data-fragment-index="1">Covariate-based strategies of regression adjustment & matching help reduce selection bias</li>
+  <ul class="fragment" data-fragment-index="1">
+  <li>But will not eliminate it unless there are no unmeasured confounders</li>
+  <li>Impossible to know</li>
+  </ul>
+<li class="fragment" data-fragment-index="2">DiD limits the type of unmeasured confounders that can cause selection bias</li>
+  <ul class="fragment" data-fragment-index="2">
+  <li>And gives us a way to check the likelihood that these are present & giving us serious problems</li>
+  <li>...but still can't guarantee that we've eliminated them</li>
+  </ul>
+
+# Randomized <br>Controlled Trials
+
+## Random Assignment <br>Eliminates Selection Bias
+
+- **Randomized controlled trials**: design defined by the use of **random assignment**
+  - Randomly choose from a group of people who will participate in the program
+- Those not randomly selected become the comparison group
+  - "Control" group[^fn-ctrl-group]
+- Random assignment can ***guarantee the elimination of selection bias***
+  - Making RCTs the strongest / most internally valid design
+
+[^fn-ctrl-group]: In practice, comparison groups are usually referred to as the "control" group, even in quasi-experimental designs like DiD
+
+## How Does Random Assignment <br>Eliminate Selection Bias? {.smaller}
+
+:::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{dot}
+//| fig-height: 2
+//| fig-width: 8
+digraph G {
+  graph [layout=fdp ratio=0.25 overlap="true"]
+  node [shape=box fontname="../../../../../Roboto-Regular" fontsize=14]
+  prog [label=<Mindfulness<br/>Prog> pos="1,0!"]
+  outcome [label=<Depression> pos="3,0!"]
+  motivation [label=<Motivation> pos="2,1.04!"]
+  random [label=<Random<br/>Assign> pos="0.5,1!" style=invis]
+  other [label=<All Unmeasured<br/>Confounders> pos="3.5,1!" style=invis]
+
+  edge [arrowsize=0.5]
+  prog -> outcome
+  motivation -> prog
+  motivation -> outcome
+}
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{dot}
+//| fig-height: 2
+//| fig-width: 8
+digraph G {
+  graph [layout=fdp ratio=0.25 overlap="true"]
+  node [shape=box fontname="../../../../../Roboto-Regular" fontsize=14]
+  prog [label=<Mindfulness<br/>Prog> pos="1,0!"]
+  outcome [label=<Depression> pos="3,0!"]
+  motivation [label=<Motivation> pos="2,1.04!"]
+  random [label=<Random<br/>Assign> pos="0.5,1!"]
+  other [label=<All Unmeasured<br/>Confounders> pos="3.5,1!" style=invis]
+
+  edge [arrowsize=0.5]
+  prog -> outcome
+  motivation -> prog [style=invis]
+  motivation -> outcome
+  random -> prog
+}
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{dot}
+//| fig-height: 2
+//| fig-width: 8
+digraph G {
+  graph [layout=fdp ratio=0.25 overlap="true"]
+  node [shape=box fontname="../../../../../Roboto-Regular" fontsize=14]
+  prog [label=<Mindfulness<br/>Prog> pos="1,0!"]
+  outcome [label=<Depression> pos="3,0!"]
+  motivation [label=<Motivation> pos="1.5,1.04!"]
+  random [label=<Random<br/>Assign> pos="0.5,1!" style=invis]
+  other [label=<All Unmeasured<br/>Confounders> pos="3.5,1!" style=invis]
+  base [label=<Baseline<br/>Depression> pos="2.5,1!"]
+
+  edge [arrowsize=0.5]
+  prog -> outcome
+  motivation -> prog
+  motivation -> outcome
+  base -> prog
+  base -> outcome
+}
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=3}
+```{dot}
+//| fig-height: 2
+//| fig-width: 8
+digraph G {
+  graph [layout=fdp ratio=0.25 overlap="true"]
+  node [shape=box fontname="../../../../../Roboto-Regular" fontsize=14]
+  prog [label=<Mindfulness<br/>Prog> pos="1,0!"]
+  outcome [label=<Depression> pos="3,0!"]
+  motivation [label=<Motivation> pos="1.5,1.04!"]
+  random [label=<Random<br/>Assign> pos="0.5,1!"]
+  other [label=<All Unmeasured<br/>Confounders> pos="3.5,1!" style=invis]
+  base [label=<Baseline<br/>Depression> pos="2.5,1!"]
+
+  edge [arrowsize=0.5]
+  prog -> outcome
+  motivation -> prog [style=invis]
+  motivation -> outcome
+  base -> prog [style=invis]
+  base -> outcome
+  random -> prog
+}
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=4}
+```{dot}
+//| fig-height: 2
+//| fig-width: 8
+digraph G {
+  graph [layout=fdp ratio=0.25 overlap="true"]
+  node [shape=box fontname="../../../../../Roboto-Regular" fontsize=14]
+  prog [label=<Mindfulness<br/>Prog> pos="1,0!"]
+  outcome [label=<Depression> pos="3,0!"]
+  motivation [label=<Motivation> pos="1.5,1.04!"]
+  random [label=<Random<br/>Assign> pos="0.5,1!" style=invis]
+  other [label=<All Unmeasured<br/>Confounders> pos="3.5,1!" style=dashed]
+  base [label=<Baseline<br/>Depression> pos="2.5,1!"]
+
+  edge [arrowsize=0.5]
+  prog -> outcome
+  motivation -> prog
+  motivation -> outcome
+  base -> prog
+  base -> outcome
+  other -> prog [style=dashed]
+  other -> outcome [style=dashed]
+}
+```
+:::
+
+::: {.fragment fragment-index=5}
+```{dot}
+//| fig-height: 2
+//| fig-width: 8
+digraph G {
+  graph [layout=fdp ratio=0.25 overlap="true"]
+  node [shape=box fontname="../../../../../Roboto-Regular" fontsize=14]
+  prog [label=<Mindfulness<br/>Prog> pos="1,0!"]
+  outcome [label=<Depression> pos="3,0!"]
+  motivation [label=<Motivation> pos="1.5,1.04!"]
+  random [label=<Random<br/>Assign> pos="0.5,1!"]
+  other [label=<All Unmeasured<br/>Confounders> pos="3.5,1!" style=dashed]
+  base [label=<Baseline<br/>Depression> pos="2.5,1!"]
+
+  edge [arrowsize=0.5]
+  prog -> outcome
+  motivation -> prog [style=invis]
+  motivation -> outcome
+  base -> prog [style=invis]
+  base -> outcome
+  other -> prog [style=invis]
+  other -> outcome [style=dashed]
+  random -> prog
+}
+```
+:::
+::::
+
+<br>  
+
+:::: {.r-stack .stack-top .fixed-cols}
+::: {.fragment .fade-out fragment-index=1}
+
+| Variable | Participant | Comparison |
+|---|:---:|:---:|
+| Motivation | 3 | 1 |
+| ***Y(0)*** | ***5*** | ***7*** |
+
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+
+| Variable | Participant | Comparison |
+|---|:---:|:---:|
+| Motivation | 2 | 2 |
+| ***Y(0)*** | ***6*** | ***6*** |
+
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+
+| Variable | Participant | Comparison |
+|---|:---:|:---:|
+| Motivation | 3 | 1 |
+| Base Depress | 10 | 14 |
+| ***Y(0)*** | ***4*** | ***8*** |
+
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=3}
+
+| Variable | Participant | Comparison |
+|---|:---:|:---:|
+| Motivation | 2 | 2 |
+| Base Depress | 12 | 12 |
+| ***Y(0)*** | ***6*** | ***6*** |
+
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=4}
+
+| Variable | Participant | Comparison |
+|---|:---:|:---:|
+| Motivation | 3 | 1 |
+| Base Depress | 10 | 14 |
+| ***Y(0)*** | ***3*** | ***9*** |
+
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=5}
+
+| Variable | Participant | Comparison |
+|---|:---:|:---:|
+| Motivation | 2 | 2 |
+| Base Depress | 12 | 12 |
+| ***Y(0)*** | ***6*** | ***6*** |
+
+:::
+::::
+
+## Random Assignment in Action
+
+```{r}
+set.seed(6)
+library(dplyr, warn.conflicts = FALSE)
+data <- data.frame(
+  participate = rep(c(1,0), each = 250)
+) |>
+  mutate(
+    group = ifelse(participate == 1, 'participant', 'comparison'),
+    test_score = rnorm(500, 100, 25) + participate * 30,
+    income = rnorm(500, 75, 25) + participate * 20,
+    age = rnorm(500, 12, 2) + participate,
+    prek = c(rep(1, 150), rep(0, 100), rep(1, 75), rep(0, 175)),
+    red = c(rep(1, 200), rep(0, 50), rep(1, 25), rep(0, 225)),
+    blue = c(rep(0, 200), rep(1, 50), rep(0, 25), rep(1, 225)),
+    y0 = test_score + income * .1 + age * 2 + prek * 5 + red
+  )
+
+# hand the data to the interactive pieces below (Observable JS)
+ojs_define(ra_data = data)
+```
+
+:::: {.columns .ra}
+::: {.column width="45%"}
+```{ojs}
+// participate as R made it: first 250 participants, last 250 comparison
+ra_natural = transpose(ra_data).map(d => d.participate)
+
+// blur so the arrow keys / space keep moving the slides after a click
+ra_blur = () => document.activeElement?.blur()
+
+// Randomize shuffles who participates (still 250 per group); Reset puts
+// back the original assignment
+viewof ra_assign = Inputs.button([
+  ["randomize", () => { ra_blur(); return d3.shuffle(ra_natural.slice()) }],
+  ["reset to natural", () => { ra_blur(); return ra_natural }]
+], {value: ra_natural})
+```
+
+```{ojs}
+// data with the current assignment: participate and group follow it,
+// everything else stays with the person
+ra_current = transpose(ra_data).map((d, i) => ({
+  ...d,
+  participate: ra_assign[i],
+  group: ra_assign[i] === 1 ? "participant" : "comparison"
+}))
+
+ra_vars = Object.keys(ra_data).filter(v => !["participate", "group"].includes(v))
+```
+
+```{ojs}
+// means of each variable by group
+ra_mean = (v, p) => d3.mean(ra_current.filter(d => d.participate === p), d => d[v])
+
+// how each variable's mean is shown (the 0/1 variables as percentages)
+ra_fmt = {
+  const pct = v => `${Math.round(v * 100)}%`
+  return {
+    test_score: v => v.toFixed(0),
+    income: v => `$${v.toFixed(0)}k`,
+    age: v => v.toFixed(1),
+    prek: pct,
+    red: pct,
+    blue: pct,
+    y0: v => v.toFixed(0)
+  }
+}
+
+// name shown for each variable
+ra_labels = ({
+  test_score: "Base Test Score",
+  income: "Fam Income",
+  age: "Age",
+  prek: "Did Pre-K",
+  red: "Red",
+  blue: "Blue",
+  y0: "Y(0)"
+})
+
+// the y0 row is bold italic (styles in style_8.css)
+html`<div class="ra-means"><table>
+  <thead><tr><th>Variable</th><th>Participant</th><th>Comparison</th></tr></thead>
+  <tbody>${ra_vars.map(v => html`<tr class=${v === "y0" ? "ra-y0" : null}>
+    <td>${ra_labels[v]}</td><td>${ra_fmt[v](ra_mean(v, 1))}</td><td>${ra_fmt[v](ra_mean(v, 0))}</td>
+  </tr>`)}</tbody>
+</table></div>`
+```
+
+<!-- pinned to the bottom of the column, so the full data opens upward
+from the button (styles in style_8.css) -->
+::: {.ra-bottom}
+```{ojs}
+// full data table, collapsed until the full data button is clicked.
+// participate is left out to save space (group shows the same thing)
+ra_full_cols = Object.keys(ra_data).filter(v => v !== "participate")
+
+// built once each time it's opened; ra_full.update() then rewrites the
+// cells in place when the data changes, rather than redrawing the table
+// (which flickers and loses the scroll position)
+ra_full = {
+  if (!ra_show_full) return html``
+  const fmt = x => typeof x === "number" && !Number.isInteger(x) ? x.toFixed(1) : x
+  const rows = transpose(ra_data).map(() => ra_full_cols.map(() => html`<td></td>`))
+  const el = html`<div class="ra-full"><table>
+    <thead><tr>${ra_full_cols.map(v => html`<th>${v}</th>`)}</tr></thead>
+    <tbody>${rows.map(cells => html`<tr>${cells}</tr>`)}</tbody>
+  </table></div>`
+  el.update = data => data.forEach((d, i) => ra_full_cols.forEach((v, j) => {
+    rows[i][j].textContent = fmt(d[v])
+  }))
+  return el
+}
+```
+
+```{ojs}
+//| output: false
+ra_full.update?.(ra_current)
+```
+
+```{ojs}
+viewof ra_show_full = Inputs.button("full data", {value: false, reduce: v => { ra_blur(); return !v }})
+```
+:::
+:::
+
+::: {.column width="55%"}
+```{ojs}
+// one person icon per row of the data, colored by red / blue, in a block
+// per group 15 across (the biggest icons that fill the slide's height:
+// 17 rows, the last one partial). built once; ra_people.update() moves
+// them afterwards so the moves animate (styles in style_8.css)
+ra_people = {
+  const people = transpose(ra_data)
+  const wrap = html`<div class="ra-people">
+    <div class="ra-head" style="left: 0%">Participant</div>
+    <div class="ra-head" style="left: 54%">Comparison</div>
+  </div>`
+  const icons = people.map(d => {
+    const el = html`<div class="ra-person">${svg`<svg viewBox="0 0 20 40" fill=${d.red === 1 ? "#EE1289" : "#00B2EE"}>
+      <circle cx="10" cy="6" r="5.5"/>
+      <path d="M5 13h10a3 3 0 0 1 3 3v11h-3.5v12h-3.5v-11h-2v11h-3.5v-12h-3.5v-11a3 3 0 0 1 3-3z"/>
+    </svg>`}</div>`
+    wrap.append(el)
+    return el
+  })
+
+  // each person's spot: their group (p) and position within its block
+  const count = {1: 0, 0: 0}
+  const natural = people.map(d => ({p: d.participate, pos: count[d.participate]++}))
+  let spots = natural.map(s => ({...s}))
+  const place = (el, s) => {
+    el.style.left = `${(s.p === 1 ? 0 : 54) + (s.pos % 15) * (46 / 15)}%`
+    el.style.top = `${45 + Math.floor(s.pos / 15) * 33}px`
+  }
+
+  // reset puts everyone back in their original spot. otherwise each group
+  // fills reds from the top and blues below them. people who stay in their
+  // group keep their spot if it's still in their color's zone, and
+  // everyone else (switchers, plus stayers whose zone moved) takes the
+  // first free spot in their zone, so as few people move as possible
+  wrap.update = assign => {
+    if (assign === ra_natural) {
+      spots = natural.map(s => ({...s}))
+    } else {
+      for (const g of [1, 0]) {
+        const members = people.map((d, i) => i).filter(i => assign[i] === g)
+        const nRed = members.filter(i => people[i].red === 1).length
+        const zone = i => people[i].red === 1 ? [0, nRed] : [nRed, members.length]
+        const inZone = (i, pos) => pos >= zone(i)[0] && pos < zone(i)[1]
+        const taken = new Set()
+        const stay = members.filter(i => spots[i].p === g && inZone(i, spots[i].pos))
+        stay.forEach(i => taken.add(spots[i].pos))
+        members.filter(i => !stay.includes(i)).forEach(i => {
+          let pos = zone(i)[0]
+          while (taken.has(pos)) pos++
+          taken.add(pos)
+          spots[i] = {p: g, pos}
+        })
+      }
+    }
+    spots.forEach((s, i) => place(icons[i], s))
+  }
+
+  spots.forEach((s, i) => place(icons[i], s))
+  return wrap
+}
+```
+
+```{ojs}
+//| output: false
+ra_people.update(ra_assign)
+```
+:::
+::::
+
+## RCT: Difference in Mean Outcomes = <br>Unbiased Prog Effect Estimate
+
+- After random assignment:
+  - Participant Avg Baseline Vars $\approx$ Comparison Avg Baseline Vars
+  - Participant Avg $Y(0) \approx$ Comparison Avg $Y(0)$
+  - Prog Effect $\approx$ Participant Avg $Y -$ Comparison Avg $Y$
+
+::: {.fragment fragment-index=1 style="display: flex; justify-content: center;"}
+🌟🥇🏆 ***"Gold standard" design*** 🏆🥇🌟
+:::
+
+<ul><li class="fragment" data-fragment-index="2">Useful to combine with covariate adjustment to help reduce noise from chance baseline imbalance</li>
+<ul class="fragment" data-fragment-index="2"><li>Especially using a baseline measure of the outcome</li></ul></ul>
+
+## RCT Validity Threat 1: Attrition {.smaller}
+
+- Inevitably, people will **attrit**: drop out of the study or be unreachable at follow-up
+- Their ***data is missing***
+- **Differential attrition**: when groups have different attrition rates, this can ***create selection bias***
+
+```{r}
+library(ggplot2)
+data <- data.frame(
+  participate = rep(c(1, 0), each = 100),
+  group = rep(c('Participant', 'Control'), each = 100)
+) |>
+  mutate(
+    y = rnorm(200, 20, 5) + participate * 3
+  ) |>
+  # the lowest scorers in each group are missing: 10 participants, 30 controls
+  mutate(.by = group, miss = as.integer(rank(y) <= if_else(participate == 1, 10, 45)))
+
+# each group's points with a big point at its mean. drop_missing grays out
+# the people with miss == 1 and leaves them out of the means. the jitter
+# has a fixed seed, so the points sit in the same spots in both versions
+attrition_plot <- function(drop_missing) {
+  d <- data |>
+    mutate(
+      group = factor(group, levels = c("Participant", "Control")),
+      color = if_else(drop_missing & miss == 1, "missing", as.character(group))
+    )
+  means <- d |>
+    filter(!(drop_missing & miss == 1)) |>
+    summarise(.by = group, y = mean(y))
+  diff <- means$y[means$group == "Participant"] - means$y[means$group == "Control"]
+  ggplot(d, aes(group, y, color = color)) +
+    geom_point(alpha = 0.7, position = position_jitter(width = 0.05, height = 0, seed = 1)) +
+    # line between the means, with the difference written above it. the
+    # label starts just right of the participants and runs out over the
+    # control group, above its highest point (the same spot in both versions)
+    geom_line(data = means, aes(group = 1), color = "black") +
+    annotate(
+      "text", x = 1.3, y = max(d$y[d$group == "Control"]) + 6, hjust = 0, size = 6,
+      label = paste0("Participant \u2212 Control = ", sprintf("%.1f", diff))
+    ) +
+    geom_point(data = means, size = 4.5, color = "black") +
+    scale_color_manual(values = c(
+      Participant = "deepskyblue2", Control = "deeppink2", missing = "gray"
+    )) +
+    labs(x = NULL, y = "Post-Prog Test") +
+    theme_minimal(base_size = 18) +
+    theme(
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      legend.position = "none"
+    )
+}
+```
+
+:::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+attrition_plot(drop_missing = FALSE)
+```
+:::
+
+::: {.fragment fragment-index=1}
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+attrition_plot(drop_missing = TRUE)
+```
+:::
+::::
+
+## RCT Validity Threat 2: Consent
+
+- Finding people who consent to being in RCTs is a big challenge
+  - Consent rates frequently well below 50%
+- Mostly an external validity issue: can ***only learn about effects for population of people willing to consent***
+- But if ***randomization is done prior to consent***, this creates potential for ***differential consent***
+  - This can ***create selection bias*** in the same way as differential attrition
+  - "Waitlist control" designs may face this (ask me how I know...😓)
+
+## Intent-to-Treat vs. <br>Treatment-on-the-Treated {.smaller #itt-tot}
+
+- Some people assigned to a program don't do it
+  - And some who are not assigned will do it anyway
+- **Intent-to-treat (ITT)**: effect of being ***assigned to a program***
+- **Treatment-on-the-treated (TOT)**: effect of actually ***doing the program***[^fn-cace]
+<li class=fragment data-fragment-index="1">ITT is the straightforward estimate:</li></ul>
+
+[$ITT =Y_{\textit{assigned to particiate}} - Y_{\textit{assigned to control}}$]{.fragment fragment-index=1}
+
+<ul class=fragment data-fragment-index="2"><li>But all effects come from just the subset who actually participate (and wouldn't have if assigned to control)</li>
+  <ul><li>So the effect of participation must be larger than ITT</li></ul></ul>
+
+[$TOT = \frac{ITT}{\textit{% induced to participate}}$ &emsp; [see appendix for details](#appendix-tot){style="font-size: 0.7em;"}]{.fragment fragment-index=2}
+
+[^fn-cace]: Another name for TOT is complier average causal effect (CACE). I like CACE better but it's more technical so we'll stick with TOT for class.
+
+## Unit of Assignment
+
+- **Individual** assignment: assign individual people (or whatever your unit of analysis) to program or control
+- **Cluster** assignment: assign entire clusters of people/units to program or control
+  - Example: entire schools of students are assigned to either participate or not
+- Cluster-randomized typically requires a large number of clusters (eg schools) to participate in study for adequate statistical power
+
+## Treatment Contrast {.smaller}
+
+- **Treatment contrast**: difference between what the ***control group gets*** and what the program group gets
+  - **Counterfactual condition**: the services/conditions for the control group
+- "**Business as usual**": most common counterfactual condition, where control group gets whatever services they would typically get
+  - These "business as usual" conditions can vary from place-to-place or over time
+  - This variation can have big implications on the estimated program effects
+- Example: effect of Head Start
+  - If most children in the community can already access free high-quality pre-k, the effect may be small
+  - But if most children are unable to access pre-k, the effect may be large
+- Many different types of treatment contrasts can be set up; each answers a different evaluation question
+
+# Regression Discontinuity
+
+## Example for RD Intuition
+
+- Students must all take a placement test; if they score below 180, they must take a remedial course
+- We want to know the effect of the remedial course on main course performance
+- We can use a **regression discontinuity** (RD) design:
+  - Participant group: students who ***scored 179***
+  - Control group: students who ***scored 180***
+- These students are ***basically the same***, with just 1 point difference
+- So any difference in course performance we observe should be due to the remedial course rather than confounders
+
+## RD Takes Advantage of <br>"Assignment Variables" {.smaller}
+
+- **Assignment variable**:[^fn-assign-var] variable that assigns people to program
+- **Cutoff**:[^fn-cutoff] the point on the assignment variable where...
+  - People with values below are assigned to one group (eg program)
+  - People with values above are assigned to the other group (eg control)
+
+[^fn-assign-var]: Also called "running" or "forcing" variable
+[^fn-cutoff]: Also called "cut point", "cut score", or "threshold"
+
+```{r}
+#| fig-width: 10
+#| fig-height: 1.9
+#| fig-align: center
+# number line of the assignment variable, split at the cutoff
+
+# curly brace from x1 to x2, hanging down from y with its point h below:
+# two sigmoids per half give the curled ends and the point in the middle
+brace <- function(x1, x2, y, h, k = 25) {
+  u <- seq(0, 1, length.out = 100)
+  half <- 1 / (1 + exp(-k * u)) + 1 / (1 + exp(-k * (u - 1))) - 0.5
+  data.frame(x = x1 + (x2 - x1) * c(u, 1 + u[-1]) / 2,
+    y = y - h * c(half, rev(half)[-1]))
+}
+arrow_head <- arrow(length = unit(0.1, "in"))
+# 10 dashes from y = -0.95 to 0.95, with gaps the same length as the dashes
+cut_len <- (0.95 - -0.95) / (2 * 10 - 1)
+cut_dash <- seq(-0.95, 0.95 - cut_len, by = 2 * cut_len)
+
+ggplot() +
+  annotate("segment", x = 135, xend = 225, y = 0, yend = 0, linewidth = 1) +
+  # x-axis style ticks every 10 points
+  annotate("segment", x = seq(140, 220, 10), xend = seq(140, 220, 10), y = 0, yend = -0.15) +
+  annotate("text", x = seq(140, 220, 10), y = -0.45, label = seq(140, 220, 10), size = 6) +
+  # the cutoff: dashed line drawn as separate dashes, sized so it starts
+  # and ends on a full dash
+  annotate("segment", x = 180, xend = 180, y = cut_dash, yend = cut_dash + cut_len,
+    linewidth = 1, lineend = "butt") +
+  # braces under the scores on each side of the cutoff, labeled at their points
+  geom_path(data = brace(136, 179.5, -0.75, 0.3), aes(x, y), color = "deepskyblue2") +
+  geom_path(data = brace(180.5, 224, -0.75, 0.3), aes(x, y), color = "deeppink2") +
+  annotate("text", x = c(157.75, 202.25), y = -1.35, size = 7,
+    label = c("remedial course", "no remedial course"), color = c("deepskyblue2", "deeppink2")) +
+  annotate("text", x = 169.5, y = 0.6, label = "cutoff", size = 7, fontface = "italic") +
+  annotate("segment", x = 174, xend = 179.3, y = 0.55, yend = 0.35, arrow = arrow_head) +
+  # title of the line
+  annotate("text", x = 180, y = 1.3, label = "Assignment Variable: Placement Test Score",
+    size = 7, fontface = "bold") +
+  coord_cartesian(ylim = c(-1.62, 1.55)) +
+  theme_void()
+```
+
+<ul><li class=fragment data-fragment-index="1">Assignment to program is "***as good as random***" if we know people's assignment variable value</li></ul>
+
+## RD Effect = Size of "Discontinuity" {.smaller}
+
+- Program assignment based on cutoff score creates ***"discontinuity" in the relationship*** between ***assignment variable & outcome***
+- RD effect estimate = size of the discontinuity = diff btwn those just below & above cutoff
+
+```{r}
+set.seed(6)
+data <- tibble::tibble(
+  placement_test = rnorm(300, 190, 30),
+  below_180 = ifelse(placement_test < 180, 1, 0),
+  y = pmin(15 + placement_test * .3 + rnorm(300, 5, 2), 100),
+  y_rd = y + 10 * below_180
+)
+```
+
+:::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{r}
+ggplot(data, aes(placement_test, y)) + 
+  geom_point(color = 'deeppink2', alpha = .5) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "deeppink4", linewidth = 1.5) +
+  scale_x_continuous(breaks = c(140, 180, 220, 260)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  ggtitle("Natural Relationship Between Placement Test and Course Grade")
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=1}
+```{r}
+ggplot(data, aes(placement_test, y)) + 
+  geom_point(color = 'deeppink2', alpha = .5) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, color = "deeppink4", linewidth = 1.5) +
+  scale_x_continuous(breaks = c(140, 180, 220, 260)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  ggtitle("Natural Relationship Between Placement Test and Course Grade") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+
+::: {.fragment .fade-in-then-out fragment-index=2}
+```{r}
+ggplot(data, aes(placement_test, y_rd, color = factor(below_180))) + 
+  geom_point(alpha = .5) +
+  # separate lines below and above the cutoff, in darker shades of their dots' colors
+  geom_smooth(aes(color = paste0("line", below_180)), method = "lm", formula = y ~ x,
+    se = FALSE, linewidth = 1.5) +
+  scale_color_manual(values = c(`1` = "deepskyblue2", `0` = "deeppink2",
+    line1 = "deepskyblue4", line0 = "deeppink4"), guide = "none") +
+  scale_x_continuous(breaks = c(140, 180, 220, 260)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  ggtitle("Relationship After Assigning < 180 Score to Remedial") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+::::
+
+## RD Effects Are "Local" to <br>People At the Cutoff {.smaller}
+
+- RD estimates effects ***only for people just below & above*** the cutoff
+- **Local average treatment effect** (LATE): the effect is "local" to people with these assignment variable scores
+- ***Effects may be different*** for people with ***different values on the assignment variable***
+- For instance, in our example:
+
+$$
+Prog \: Effect_{RD} = Y_{place \: test = 179} - Y_{place \: test = 180}
+$$
+
+- But people who scored eg 160 on the placement test may have benefitted less (or more) from the remedial course
+- ***RD cannot tell us about the effects for people who scored far from the cutoff*** on the placement test
+
+## Biggest Threat to Validity: <br>Manipulation at the Cutoff
+
+- Someone may ***know about the cutoff*** and ***intentionally try to score higher or lower*** to get into (or out of) the program
+- Introduces ***selection bias***, as ***people are now "choosing"*** whether to do the program, ***rather than their score "assigning"*** them
+- Check for **bunching** to see if this might be happening
+
+## Bunching Check
+
+- Look at a histogram, which shows the number of people at each assignment variable value
+- Many more scores just to one side of the cutoff than the other = evidence of manipulation
+
+:::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+set.seed(6)
+data_bunch <- tibble::tibble(
+  placement_test = rnorm(10000, 210, 30),
+  placement_test_bunch = ifelse(
+    placement_test < 180 & placement_test > 177, placement_test + 2, placement_test
+  )
+) |> 
+  filter(placement_test > 141 & placement_test < 279)
+ggplot(data_bunch) +
+  geom_histogram(aes(placement_test), color = 'deepskyblue4', binwidth = 2, fill = 'deepskyblue2') +
+  geom_vline(aes(xintercept = 179), lty = "dashed") +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(hjust = .5)
+  ) +
+  scale_x_continuous(breaks = c(160, 180, 200, 220, 240, 260)) +
+  ggtitle('No Bunching') +
+  xlab('Placement Test Score')
+```
+:::
+
+::: {.fragment fragment-index=1}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+set.seed(6)
+data_bunch <- tibble::tibble(
+  placement_test = rnorm(10000, 210, 30),
+  placement_test_bunch = case_when(
+    placement_test < 180 & placement_test > 179.2 ~ placement_test + 1,
+    placement_test < 179 & placement_test > 178.2 ~ placement_test + 2,
+    placement_test < 178 & placement_test > 177.2 ~ placement_test + 3,
+    .default = placement_test
+  )
+) |> 
+  filter(placement_test > 141 & placement_test < 279)
+ggplot(data_bunch) +
+  geom_histogram(aes(placement_test_bunch), color = 'deepskyblue4', binwidth = 2, fill = 'deepskyblue2') +
+  geom_vline(aes(xintercept = 179), lty = "dashed") +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid = element_blank(),
+    plot.title = element_text(hjust = .5)
+  ) +
+  scale_x_continuous(breaks = c(160, 180, 200, 220, 240, 260)) +
+  ggtitle('Bunching') +
+  xlab('Placement Test Score')
+```
+:::
+::::
+
+## Covariate Discontinuities = <br>Possible Selection Bias
+
+- If there are ***discontinuities in covariates at the cutoff***, the groups are ***imbalanced***
+  - These covariates will ***create selection bias*** if they affect outcome
+- Check for this by:
+  - Plotting the relationships between the assignment variable & baseline covariates
+  - Estimating the "effect" of the assignment var on the covariate, as if it was the outcome; large estimates are sign of trouble
+
+## RD Estimation Requires Modeling <br>Relationship Btwn Assign Var & Outcome {.smaller}
+
+- Conceptually, RD is difference between those just below and above the cutoff
+- But we typically don't have enough observations *just* below & above
+- So we estimate the relationship between assign var & outcome on both sides of cutoff
+- RD effect estimate = gap between the relationship lines at the cutoff
+
+::: {style="display: flex; justify-content: center"}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+ggplot(data, aes(placement_test, y_rd, color = factor(below_180))) + 
+  geom_point(alpha = .5) +
+  # separate lines below and above the cutoff, in darker shades of their dots' colors
+  geom_smooth(aes(color = paste0("line", below_180)), method = "lm", formula = y ~ x,
+    se = FALSE, linewidth = 1.5) +
+  scale_color_manual(values = c(`1` = "deepskyblue2", `0` = "deeppink2",
+    line1 = "deepskyblue4", line0 = "deeppink4"), guide = "none") +
+  scale_x_continuous(breaks = c(140, 180, 220, 260)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+
+## Bandwidth: <br>How Far From the Cutoff Do We Go? {.smaller}
+
+- The ***further we get from cutoff***, the ***more different people become***
+  - And thus the ***more we rely on statistical estimation*** to get relationship for people near cutoff
+- So we ***limit our sample to those within a certain distance*** from cutoff, aka **bandwidth**
+
+:::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+ggplot(data, aes(placement_test, y_rd, color = factor(below_180))) + 
+  geom_point(alpha = .5) +
+  # separate lines below and above the cutoff, in darker shades of their dots' colors
+  geom_smooth(aes(color = paste0("line", below_180)), method = "lm", formula = y ~ x,
+    se = FALSE, linewidth = 1.5) +
+  scale_color_manual(values = c(`1` = "deepskyblue2", `0` = "deeppink2",
+    line1 = "deepskyblue4", line0 = "deeppink4"), guide = "none") +
+  scale_x_continuous(breaks = c(140, 180, 220, 260)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+
+::: {.fragment fragment-index=1}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+data |> 
+  filter(placement_test > 170 & placement_test < 190) |> 
+  ggplot(aes(placement_test, y_rd, color = factor(below_180))) + 
+  geom_point(alpha = .5) +
+  # separate lines below and above the cutoff, in darker shades of their dots' colors
+  geom_smooth(aes(color = paste0("line", below_180)), method = "lm", formula = y ~ x,
+    se = FALSE, linewidth = 1.5) +
+  scale_color_manual(values = c(`1` = "deepskyblue2", `0` = "deeppink2",
+    line1 = "deepskyblue4", line0 = "deeppink4"), guide = "none") +
+  scale_x_continuous(breaks = c(170, 180, 190)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+::::
+
+## The Smaller the Bandwidth, the <br>Smaller the Sample...
+
+- ...and therefore the ***less statistical power*** we have
+- So there's always a ***tradeoff*** with bandwidth: ***internal validity vs. precision***
+
+:::: {.r-stack}
+::: {.fragment .fade-out fragment-index=1}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+data |> 
+  filter(placement_test > 170 & placement_test < 190) |> 
+  ggplot(aes(placement_test, y_rd, color = factor(below_180))) + 
+  geom_point(alpha = .5) +
+  # separate lines below and above the cutoff, in darker shades of their dots' colors
+  geom_smooth(aes(color = paste0("line", below_180)), method = "lm", formula = y ~ x,
+    se = FALSE, linewidth = 1.5) +
+  scale_color_manual(values = c(`1` = "deepskyblue2", `0` = "deeppink2",
+    line1 = "deepskyblue4", line0 = "deeppink4"), guide = "none") +
+  scale_x_continuous(breaks = c(170, 180, 190)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+
+::: {.fragment fragment-index=1}
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+ggplot(data, aes(placement_test, y_rd, color = factor(below_180))) + 
+  geom_point(alpha = .5) +
+  # separate lines below and above the cutoff, in darker shades of their dots' colors
+  geom_smooth(aes(color = paste0("line", below_180)), method = "lm", formula = y ~ x,
+    se = FALSE, linewidth = 1.5) +
+  scale_color_manual(values = c(`1` = "deepskyblue2", `0` = "deeppink2",
+    line1 = "deepskyblue4", line0 = "deeppink4"), guide = "none") +
+  scale_x_continuous(breaks = c(140, 180, 220, 260)) +
+  # oob_keep: the fitted lines run slightly past 100 at the top end; keep
+  # them going instead of cutting them off where they cross the limit
+  scale_y_continuous(breaks = seq(50, 100, 10), limits = c(min(data$y), 100),
+    oob = scales::oob_keep) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5)
+  ) +
+  labs(x = "Placement Test Score", y = "Course Grade") +
+  geom_vline(aes(xintercept = 180), lty = "dashed")
+```
+:::
+::::
+
+# Comparing Strategies
+
+## Non-Randomized vs. Controlled & <br>External vs. Internal Validity {.smaller}
+
+- ***Non-randomized*** strategies (covariate-based, DiD) ***observe the world as it naturally occurs***
+  - Therefore, they often have ***higher external validity***
+  - But they ***can't control who accesses program***, so have ***lower internal validity***
+- ***Controlled*** strategies (RCT, RD) ***assign people*** to program & comparison groups
+  - They have ***higher internal validity*** due to this control
+  - But ***RCTs are unnatural*** scenarios, so they may have ***lower external validity***
+  - And ***RD*** only estimates ***effects for those near cutoff***, so they also may have ***lower external validity***
+
+# Appendix
+
+## "Scale Up" the ITT Estimate to <br>Get TOT {.parens .smaller #appendix-tot}
+
+[back to main slide](#itt-tot){style="font-size: 0.7em;"}
+
+- All effects must come from those assigned to participate who
+  (a) Actually participated
+  (b) Wouldn't have participated if assigned to control
+- ***Otherwise, potential outcomes are the same*** regardless of assignment
+- So the difference in outcomes should be ***averaged across just this subset of people***, rather than the whole participant group
+
+:::: {.columns .fragment fragment-index=1}
+::: {.column .center-table width="50%"}
+
+| assignment | participated |
+|---|---|
+| participate | 70% |
+| control | 20% |
+
+:::
+
+::: {.column width="50%"}
+
+% "treated" $= 70\% - 20\% = 50\%$
+
+[TOT $= \frac{ITT}{0.50}$]{.fragment fragment-index=2}
+
+[So if ITT is, for example, 10:]{.fragment fragment-index=3}
+
+[TOT $= \frac{10}{0.50} = 20$]{.fragment fragment-index=3}
+
+:::
+::::
